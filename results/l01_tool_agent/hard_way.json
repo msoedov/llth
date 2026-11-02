@@ -1,0 +1,328 @@
+{
+  "cases": {
+    "uses_tool": {
+      "output": "The weather in San Francisco is sunny right now.",
+      "error": null,
+      "seconds": 3.313608790980652,
+      "checks": {
+        "called get_weather x1": true,
+        "called get_weather with {'city': 'San Francisco'}": true,
+        "contains ('sunny',)": true,
+        "llm calls <= 2": true
+      },
+      "tool_calls": [
+        {
+          "name": "get_weather",
+          "args": [],
+          "kwargs": {
+            "city": "San Francisco"
+          }
+        }
+      ],
+      "requests": [
+        {
+          "path": "/api/v1/chat/completions",
+          "body": {
+            "model": "openai/gpt-5.4-mini",
+            "messages": [
+              {
+                "role": "system",
+                "content": "You are a helpful assistant"
+              },
+              {
+                "role": "user",
+                "content": "What's the weather in San Francisco?"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "get_weather",
+                  "description": "Get weather for a given city.",
+                  "parameters": {
+                    "type": "object",
+                    "properties": {
+                      "city": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "city"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "path": "/api/v1/chat/completions",
+          "body": {
+            "model": "openai/gpt-5.4-mini",
+            "messages": [
+              {
+                "role": "system",
+                "content": "You are a helpful assistant"
+              },
+              {
+                "role": "user",
+                "content": "What's the weather in San Francisco?"
+              },
+              {
+                "role": "assistant",
+                "content": null,
+                "refusal": null,
+                "reasoning": null,
+                "tool_calls": [
+                  {
+                    "type": "function",
+                    "index": 0,
+                    "id": "call_wpskMWLXFJ18k9hQIB33Iwwn",
+                    "function": {
+                      "name": "get_weather",
+                      "arguments": "{\"city\":\"San Francisco\"}"
+                    }
+                  }
+                ]
+              },
+              {
+                "role": "tool",
+                "tool_call_id": "call_wpskMWLXFJ18k9hQIB33Iwwn",
+                "content": "It's always sunny in San Francisco!"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "get_weather",
+                  "description": "Get weather for a given city.",
+                  "parameters": {
+                    "type": "object",
+                    "properties": {
+                      "city": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "city"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 2,
+      "embedding_calls": 0,
+      "input_tokens": 155,
+      "output_tokens": 33,
+      "embedding_tokens": 0
+    },
+    "two_cities": {
+      "output": "Paris and Tokyo are both sunny right now.\n\n- Paris: sunny\n- Tokyo: sunny\n\nSo, there\u2019s no weather difference between them based on the current report.",
+      "error": null,
+      "seconds": 3.2257301670033485,
+      "checks": {
+        "called get_weather x2": true,
+        "contains ('Paris', 'Tokyo')": true,
+        "llm calls <= 3": true
+      },
+      "tool_calls": [
+        {
+          "name": "get_weather",
+          "args": [],
+          "kwargs": {
+            "city": "Paris"
+          }
+        },
+        {
+          "name": "get_weather",
+          "args": [],
+          "kwargs": {
+            "city": "Tokyo"
+          }
+        }
+      ],
+      "requests": [
+        {
+          "path": "/api/v1/chat/completions",
+          "body": {
+            "model": "openai/gpt-5.4-mini",
+            "messages": [
+              {
+                "role": "system",
+                "content": "You are a helpful assistant"
+              },
+              {
+                "role": "user",
+                "content": "Compare the weather in Paris and Tokyo."
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "get_weather",
+                  "description": "Get weather for a given city.",
+                  "parameters": {
+                    "type": "object",
+                    "properties": {
+                      "city": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "city"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "path": "/api/v1/chat/completions",
+          "body": {
+            "model": "openai/gpt-5.4-mini",
+            "messages": [
+              {
+                "role": "system",
+                "content": "You are a helpful assistant"
+              },
+              {
+                "role": "user",
+                "content": "Compare the weather in Paris and Tokyo."
+              },
+              {
+                "role": "assistant",
+                "content": null,
+                "refusal": null,
+                "reasoning": null,
+                "tool_calls": [
+                  {
+                    "type": "function",
+                    "index": 0,
+                    "id": "call_5xWJrTj2ySXGA13NDXLmm33X",
+                    "function": {
+                      "name": "get_weather",
+                      "arguments": "{\"city\":\"Paris\"}"
+                    }
+                  },
+                  {
+                    "type": "function",
+                    "index": 1,
+                    "id": "call_8zj4sdYICvMrHc7LeWNWOf5a",
+                    "function": {
+                      "name": "get_weather",
+                      "arguments": "{\"city\":\"Tokyo\"}"
+                    }
+                  }
+                ]
+              },
+              {
+                "role": "tool",
+                "tool_call_id": "call_5xWJrTj2ySXGA13NDXLmm33X",
+                "content": "It's always sunny in Paris!"
+              },
+              {
+                "role": "tool",
+                "tool_call_id": "call_8zj4sdYICvMrHc7LeWNWOf5a",
+                "content": "It's always sunny in Tokyo!"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "get_weather",
+                  "description": "Get weather for a given city.",
+                  "parameters": {
+                    "type": "object",
+                    "properties": {
+                      "city": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "city"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 2,
+      "embedding_calls": 0,
+      "input_tokens": 200,
+      "output_tokens": 86,
+      "embedding_tokens": 0
+    },
+    "no_tool_needed": {
+      "output": "4",
+      "error": null,
+      "seconds": 1.27087570913136,
+      "checks": {
+        "no tool calls": true,
+        "contains ('4',)": true,
+        "llm calls <= 1": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/api/v1/chat/completions",
+          "body": {
+            "model": "openai/gpt-5.4-mini",
+            "messages": [
+              {
+                "role": "system",
+                "content": "You are a helpful assistant"
+              },
+              {
+                "role": "user",
+                "content": "What is 2 + 2? Reply with the number only."
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "get_weather",
+                  "description": "Get weather for a given city.",
+                  "parameters": {
+                    "type": "object",
+                    "properties": {
+                      "city": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "city"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 1,
+      "embedding_calls": 0,
+      "input_tokens": 66,
+      "output_tokens": 5,
+      "embedding_tokens": 0
+    }
+  },
+  "complexity": {
+    "loc": 54,
+    "deps": [
+      "httpx"
+    ],
+    "import_seconds": 0.35514895897358656,
+    "modules": 884
+  }
+}
