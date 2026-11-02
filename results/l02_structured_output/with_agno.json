@@ -1,0 +1,236 @@
+{
+  "cases": {
+    "complete": {
+      "output": {
+        "name": "John Doe",
+        "email": "john@example.com",
+        "phone": "(555) 123-4567"
+      },
+      "error": null,
+      "seconds": 2.028664708137512,
+      "checks": {
+        "name == 'John Doe'": true,
+        "email == 'john@example.com'": true,
+        "phone == '(555) 123-4567'": true,
+        "llm calls <= 1": true,
+        "no tool calls": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "Extract contact info from the text. Use null for anything the text does not state."
+              },
+              {
+                "role": "user",
+                "content": "John Doe, john@example.com, (555) 123-4567"
+              }
+            ],
+            "reasoning": {},
+            "store": true,
+            "text": {
+              "format": {
+                "type": "json_schema",
+                "name": "ContactInfo",
+                "strict": true,
+                "schema": {
+                  "title": "ContactInfo",
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "phone": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "email",
+                    "phone"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      ],
+      "llm_calls": 1,
+      "embedding_calls": 0,
+      "input_tokens": 88,
+      "output_tokens": 31,
+      "embedding_tokens": 0
+    },
+    "buried_in_prose": {
+      "output": {
+        "name": "Priya Nair",
+        "email": "priya.nair@acme.dev",
+        "phone": null
+      },
+      "error": null,
+      "seconds": 1.3960916670039296,
+      "checks": {
+        "name == 'Priya Nair'": true,
+        "email == 'priya.nair@acme.dev'": true,
+        "phone == None": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "Extract contact info from the text. Use null for anything the text does not state."
+              },
+              {
+                "role": "user",
+                "content": "Thanks for calling! If the invoice is late, ask for Priya Nair (priya.nair@acme.dev), she handles billing."
+              }
+            ],
+            "reasoning": {},
+            "store": true,
+            "text": {
+              "format": {
+                "type": "json_schema",
+                "name": "ContactInfo",
+                "strict": true,
+                "schema": {
+                  "title": "ContactInfo",
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "phone": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "email",
+                    "phone"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      ],
+      "llm_calls": 1,
+      "embedding_calls": 0,
+      "input_tokens": 103,
+      "output_tokens": 31,
+      "embedding_tokens": 0
+    },
+    "missing_fields": {
+      "output": {
+        "name": "Ana Lee",
+        "email": null,
+        "phone": null
+      },
+      "error": null,
+      "seconds": 1.5408980420324951,
+      "checks": {
+        "name == 'Ana Lee'": true,
+        "email == None": true,
+        "phone == None": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "Extract contact info from the text. Use null for anything the text does not state."
+              },
+              {
+                "role": "user",
+                "content": "My name is Ana Lee."
+              }
+            ],
+            "reasoning": {},
+            "store": true,
+            "text": {
+              "format": {
+                "type": "json_schema",
+                "name": "ContactInfo",
+                "strict": true,
+                "schema": {
+                  "title": "ContactInfo",
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "phone": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "email",
+                    "phone"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      ],
+      "llm_calls": 1,
+      "embedding_calls": 0,
+      "input_tokens": 79,
+      "output_tokens": 22,
+      "embedding_tokens": 0
+    }
+  },
+  "complexity": {
+    "loc": 7,
+    "deps": [
+      "agno"
+    ],
+    "import_seconds": 0.4756416669115424,
+    "modules": 1181
+  }
+}

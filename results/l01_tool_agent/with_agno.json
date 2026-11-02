@@ -1,0 +1,271 @@
+{
+  "cases": {
+    "uses_tool": {
+      "output": "It\u2019s always sunny in San Francisco!",
+      "error": null,
+      "seconds": 4.574830875033513,
+      "checks": {
+        "called get_weather x1": true,
+        "called get_weather with {'city': 'San Francisco'}": true,
+        "contains ('sunny',)": true,
+        "llm calls <= 2": true
+      },
+      "tool_calls": [
+        {
+          "name": "get_weather",
+          "args": [],
+          "kwargs": {
+            "city": "San Francisco"
+          }
+        }
+      ],
+      "requests": [
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "You are a helpful assistant"
+              },
+              {
+                "role": "user",
+                "content": "What's the weather in San Francisco?"
+              }
+            ],
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "get_weather",
+                "description": "Get weather for a given city.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "city": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "city"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "type": "function_call_output",
+                "call_id": "call_l3Z4B6Fhr9VHhuht2CJwdfVy",
+                "output": "It's always sunny in San Francisco!"
+              }
+            ],
+            "previous_response_id": "resp_0a564c0f4c87a0bb006ae8836fa68887d298fa9ce594dd7957",
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "get_weather",
+                "description": "Get weather for a given city.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "city": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "city"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 2,
+      "embedding_calls": 0,
+      "input_tokens": 155,
+      "output_tokens": 31,
+      "embedding_tokens": 0
+    },
+    "two_cities": {
+      "output": "Paris: sunny.  \nTokyo: sunny.  \n\nThey\u2019re the same right now, so there\u2019s no weather difference to compare.",
+      "error": null,
+      "seconds": 3.106963749974966,
+      "checks": {
+        "called get_weather x2": true,
+        "contains ('Paris', 'Tokyo')": true,
+        "llm calls <= 3": true
+      },
+      "tool_calls": [
+        {
+          "name": "get_weather",
+          "args": [],
+          "kwargs": {
+            "city": "Paris"
+          }
+        },
+        {
+          "name": "get_weather",
+          "args": [],
+          "kwargs": {
+            "city": "Tokyo"
+          }
+        }
+      ],
+      "requests": [
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "You are a helpful assistant"
+              },
+              {
+                "role": "user",
+                "content": "Compare the weather in Paris and Tokyo."
+              }
+            ],
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "get_weather",
+                "description": "Get weather for a given city.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "city": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "city"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "type": "function_call_output",
+                "call_id": "call_2iobEueBnHNxXb0iv7th0F62",
+                "output": "It's always sunny in Paris!"
+              },
+              {
+                "type": "function_call_output",
+                "call_id": "call_5YgEIS2GCPUTxoIcwp5YSrtZ",
+                "output": "It's always sunny in Tokyo!"
+              }
+            ],
+            "previous_response_id": "resp_04cc326e447db14a006ae88373d99c87d2a284186221e0737e",
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "get_weather",
+                "description": "Get weather for a given city.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "city": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "city"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 2,
+      "embedding_calls": 0,
+      "input_tokens": 200,
+      "output_tokens": 78,
+      "embedding_tokens": 0
+    },
+    "no_tool_needed": {
+      "output": "4",
+      "error": null,
+      "seconds": 1.4001538339070976,
+      "checks": {
+        "no tool calls": true,
+        "contains ('4',)": true,
+        "llm calls <= 1": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "You are a helpful assistant"
+              },
+              {
+                "role": "user",
+                "content": "What is 2 + 2? Reply with the number only."
+              }
+            ],
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "get_weather",
+                "description": "Get weather for a given city.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "city": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "city"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 1,
+      "embedding_calls": 0,
+      "input_tokens": 66,
+      "output_tokens": 5,
+      "embedding_tokens": 0
+    }
+  },
+  "complexity": {
+    "loc": 6,
+    "deps": [
+      "agno"
+    ],
+    "import_seconds": 0.5804552920162678,
+    "modules": 1181
+  }
+}

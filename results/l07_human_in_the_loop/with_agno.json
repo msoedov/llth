@@ -1,0 +1,242 @@
+{
+  "cases": {
+    "approved": {
+      "output": {
+        "paused": true,
+        "result": "Done \u2014 I emailed finance@acme.dev that the Q3 report is ready."
+      },
+      "error": null,
+      "seconds": 3.453871374949813,
+      "checks": {
+        "paused == True": true,
+        "called send_email x1": true
+      },
+      "tool_calls": [
+        {
+          "name": "send_email",
+          "args": [],
+          "kwargs": {
+            "to": "finance@acme.dev",
+            "subject": "Q3 report is ready",
+            "body": "Hi Finance team,\n\nThe Q3 report is ready.\n\nBest,"
+          }
+        }
+      ],
+      "requests": [
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "You are an email assistant. Use send_email for every request."
+              },
+              {
+                "role": "user",
+                "content": "Email finance@acme.dev that the Q3 report is ready."
+              }
+            ],
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "send_email",
+                "description": "Send an email.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "to": {
+                      "type": "string"
+                    },
+                    "subject": {
+                      "type": "string"
+                    },
+                    "body": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "to",
+                    "subject",
+                    "body"
+                  ],
+                  "additionalProperties": false
+                },
+                "requires_confirmation": true,
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "type": "function_call_output",
+                "call_id": "call_J3CkUURsHlCyhSjvlZsp0AdJ",
+                "output": "Email sent to finance@acme.dev"
+              }
+            ],
+            "previous_response_id": "resp_03eea932156f2fe5006ae88413349087d28970a450c596cbe2",
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "send_email",
+                "description": "Send an email.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "to": {
+                      "type": "string"
+                    },
+                    "subject": {
+                      "type": "string"
+                    },
+                    "body": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "to",
+                    "subject",
+                    "body"
+                  ],
+                  "additionalProperties": false
+                },
+                "requires_confirmation": true,
+                "type": "function"
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 2,
+      "embedding_calls": 0,
+      "input_tokens": 227,
+      "output_tokens": 71,
+      "embedding_tokens": 0
+    },
+    "rejected": {
+      "output": {
+        "paused": true,
+        "result": "I couldn\u2019t send the email because the send was rejected. If you want, I can try again or draft a different version for you."
+      },
+      "error": null,
+      "seconds": 3.3444957081228495,
+      "checks": {
+        "paused == True": true,
+        "did not call send_email": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "You are an email assistant. Use send_email for every request."
+              },
+              {
+                "role": "user",
+                "content": "Email finance@acme.dev that the Q3 report is ready."
+              }
+            ],
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "send_email",
+                "description": "Send an email.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "to": {
+                      "type": "string"
+                    },
+                    "subject": {
+                      "type": "string"
+                    },
+                    "body": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "to",
+                    "subject",
+                    "body"
+                  ],
+                  "additionalProperties": false
+                },
+                "requires_confirmation": true,
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "type": "function_call_output",
+                "call_id": "call_NsYHqztYRPwdnGQlGwbfxSxt",
+                "output": "Function call was rejected by the user"
+              }
+            ],
+            "previous_response_id": "resp_09d85641144fd547006ae884169b4c87d2944af24383032421",
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "send_email",
+                "description": "Send an email.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "to": {
+                      "type": "string"
+                    },
+                    "subject": {
+                      "type": "string"
+                    },
+                    "body": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "to",
+                    "subject",
+                    "body"
+                  ],
+                  "additionalProperties": false
+                },
+                "requires_confirmation": true,
+                "type": "function"
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 2,
+      "embedding_calls": 0,
+      "input_tokens": 229,
+      "output_tokens": 85,
+      "embedding_tokens": 0
+    }
+  },
+  "complexity": {
+    "loc": 18,
+    "deps": [
+      "agno"
+    ],
+    "import_seconds": 0.5835911249741912,
+    "modules": 1203
+  }
+}

@@ -1,0 +1,448 @@
+{
+  "cases": {
+    "single_fact": {
+      "output": "41 euros",
+      "error": null,
+      "seconds": 4.680469291983172,
+      "checks": {
+        "contains ('41',)": true,
+        "used embeddings": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/v1/embeddings",
+          "body": {
+            "model": "text-embedding-3-small",
+            "input": "The Halvorsen Lab keeps its calibration rig, nicknamed Old Marigold, in room B-117. Booking Old Marigold requires a green badge. Sessions on the rig last at most 90 minutes. The rig is recalibrated every second Thursday by the duty technician.",
+            "dimensions": 1536,
+            "encoding_format": "float"
+          }
+        },
+        {
+          "path": "/v1/embeddings",
+          "body": {
+            "model": "text-embedding-3-small",
+            "input": "Conference travel at Halvorsen Lab is approved by Ingrid Tveit. The daily meal allowance is 41 euros. Requests must be filed 18 days before departure.",
+            "dimensions": 1536,
+            "encoding_format": "float"
+          }
+        },
+        {
+          "path": "/v1/embeddings",
+          "body": {
+            "model": "text-embedding-3-small",
+            "input": "Spills of cryogenic fluid are reported on extension 4471. The muster point for a fire alarm is the east bicycle shed. Fire drills take place on the first Monday of each quarter.",
+            "dimensions": 1536,
+            "encoding_format": "float"
+          }
+        },
+        {
+          "path": "/v1/embeddings",
+          "body": {
+            "model": "text-embedding-3-small",
+            "input": "New staff receive a blue badge on day one. A green badge is granted after passing the Tier 2 safety course, which is offered every six weeks. Every new hire is paired with a mentor for 120 days.",
+            "dimensions": 1536,
+            "encoding_format": "float"
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "Answer questions about the Halvorsen Lab handbook. Always search the handbook first. Answer only from what the search returns. If it does not contain the answer, reply exactly: I don't know.\n\n<knowledge_base>\nYou have a knowledge base you can search using the search_knowledge_base tool. Search before answering questions\u2014don't assume you know the answer. For ambiguous questions, search first rather than asking for clarification.\n</knowledge_base>"
+              },
+              {
+                "role": "user",
+                "content": "How much is the daily meal allowance?"
+              }
+            ],
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "search_knowledge_base",
+                "description": "Use this function to search the knowledge base for information about a query.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "description": "The query to search for."
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ],
+                  "additionalProperties": false
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/embeddings",
+          "body": {
+            "model": "text-embedding-3-small",
+            "input": "daily meal allowance",
+            "dimensions": 1536,
+            "encoding_format": "float"
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "type": "function_call_output",
+                "call_id": "call_jQg6YsKUWzEr2g8b4ZqVH8JN",
+                "output": "[\n  {\n    \"name\": \"travel\",\n    \"content\": \"Conference travel at Halvorsen Lab is approved by Ingrid Tveit. The daily meal allowance is 41 euros. Requests must be filed 18 days before departure.\",\n    \"meta_data\": {\n      \"chunk\": 1,\n      \"chunk_size\": 150,\n      \"linked_to\": \"\"\n    }\n  },\n  {\n    \"name\": \"onboarding\",\n    \"content\": \"New staff receive a blue badge on day one. A green badge is granted after passing the Tier 2 safety course, which is offered every six weeks. Every new hire is paired with a mentor for 120 days.\",\n    \"meta_data\": {\n      \"chunk\": 1,\n      \"chunk_size\": 194,\n      \"linked_to\": \"\"\n    }\n  },\n  {\n    \"name\": \"safety\",\n    \"content\": \"Spills of cryogenic fluid are reported on extension 4471. The muster point for a fire alarm is the east bicycle shed. Fire drills take place on the first Monday of each quarter.\",\n    \"meta_data\": {\n      \"chunk\": 1,\n      \"chunk_size\": 177,\n      \"linked_to\": \"\"\n    }\n  },\n  {\n    \"name\": \"equipment\",\n    \"content\": \"The Halvorsen Lab keeps its calibration rig, nicknamed Old Marigold, in room B-117. Booking Old Marigold requires a green badge. Sessions on the rig last at most 90 minutes. The rig is recalibrated every second Thursday by the duty technician.\",\n    \"meta_data\": {\n      \"chunk\": 1,\n      \"chunk_size\": 243,\n      \"linked_to\": \"\"\n    }\n  }\n]"
+              }
+            ],
+            "previous_response_id": "resp_09cdc4667c269573006ae883b8b7d887d29aff92eb61a8a7c9",
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "search_knowledge_base",
+                "description": "Use this function to search the knowledge base for information about a query.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "description": "The query to search for."
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ],
+                  "additionalProperties": false
+                },
+                "type": "function"
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 2,
+      "embedding_calls": 5,
+      "input_tokens": 710,
+      "output_tokens": 28,
+      "embedding_tokens": 179
+    },
+    "exact_detail": {
+      "output": "Room B-117.",
+      "error": null,
+      "seconds": 3.0332927918061614,
+      "checks": {
+        "contains ('B-117',)": true,
+        "used embeddings": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "Answer questions about the Halvorsen Lab handbook. Always search the handbook first. Answer only from what the search returns. If it does not contain the answer, reply exactly: I don't know.\n\n<knowledge_base>\nYou have a knowledge base you can search using the search_knowledge_base tool. Search before answering questions\u2014don't assume you know the answer. For ambiguous questions, search first rather than asking for clarification.\n</knowledge_base>"
+              },
+              {
+                "role": "user",
+                "content": "Where is Old Marigold kept?"
+              }
+            ],
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "search_knowledge_base",
+                "description": "Use this function to search the knowledge base for information about a query.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "description": "The query to search for."
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ],
+                  "additionalProperties": false
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/embeddings",
+          "body": {
+            "model": "text-embedding-3-small",
+            "input": "Old Marigold kept location handbook",
+            "dimensions": 1536,
+            "encoding_format": "float"
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "type": "function_call_output",
+                "call_id": "call_4TI6m4hadDupdM2QUtAuJ2Gv",
+                "output": "[\n  {\n    \"name\": \"equipment\",\n    \"content\": \"The Halvorsen Lab keeps its calibration rig, nicknamed Old Marigold, in room B-117. Booking Old Marigold requires a green badge. Sessions on the rig last at most 90 minutes. The rig is recalibrated every second Thursday by the duty technician.\",\n    \"meta_data\": {\n      \"chunk\": 1,\n      \"chunk_size\": 243,\n      \"linked_to\": \"\"\n    }\n  },\n  {\n    \"name\": \"safety\",\n    \"content\": \"Spills of cryogenic fluid are reported on extension 4471. The muster point for a fire alarm is the east bicycle shed. Fire drills take place on the first Monday of each quarter.\",\n    \"meta_data\": {\n      \"chunk\": 1,\n      \"chunk_size\": 177,\n      \"linked_to\": \"\"\n    }\n  },\n  {\n    \"name\": \"onboarding\",\n    \"content\": \"New staff receive a blue badge on day one. A green badge is granted after passing the Tier 2 safety course, which is offered every six weeks. Every new hire is paired with a mentor for 120 days.\",\n    \"meta_data\": {\n      \"chunk\": 1,\n      \"chunk_size\": 194,\n      \"linked_to\": \"\"\n    }\n  },\n  {\n    \"name\": \"travel\",\n    \"content\": \"Conference travel at Halvorsen Lab is approved by Ingrid Tveit. The daily meal allowance is 41 euros. Requests must be filed 18 days before departure.\",\n    \"meta_data\": {\n      \"chunk\": 1,\n      \"chunk_size\": 150,\n      \"linked_to\": \"\"\n    }\n  }\n]"
+              }
+            ],
+            "previous_response_id": "resp_07a38b593444f8dd006ae883bb950887d29ed962427d591771",
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "search_knowledge_base",
+                "description": "Use this function to search the knowledge base for information about a query.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "description": "The query to search for."
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ],
+                  "additionalProperties": false
+                },
+                "type": "function"
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 2,
+      "embedding_calls": 1,
+      "input_tokens": 714,
+      "output_tokens": 35,
+      "embedding_tokens": 7
+    },
+    "multi_document": {
+      "output": "A new hire must pass the Tier 2 safety course to get a green badge before they can book Old Marigold.",
+      "error": null,
+      "seconds": 3.4460191659163684,
+      "checks": {
+        "contains ('Tier 2',)": true,
+        "contains ('green',)": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "Answer questions about the Halvorsen Lab handbook. Always search the handbook first. Answer only from what the search returns. If it does not contain the answer, reply exactly: I don't know.\n\n<knowledge_base>\nYou have a knowledge base you can search using the search_knowledge_base tool. Search before answering questions\u2014don't assume you know the answer. For ambiguous questions, search first rather than asking for clarification.\n</knowledge_base>"
+              },
+              {
+                "role": "user",
+                "content": "What must a new hire do before they can book Old Marigold?"
+              }
+            ],
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "search_knowledge_base",
+                "description": "Use this function to search the knowledge base for information about a query.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "description": "The query to search for."
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ],
+                  "additionalProperties": false
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/embeddings",
+          "body": {
+            "model": "text-embedding-3-small",
+            "input": "new hire book Old Marigold before can book Old Marigold handbook",
+            "dimensions": 1536,
+            "encoding_format": "float"
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "type": "function_call_output",
+                "call_id": "call_ooJ5uSquxmPSjNA77zFkawmK",
+                "output": "[\n  {\n    \"name\": \"equipment\",\n    \"content\": \"The Halvorsen Lab keeps its calibration rig, nicknamed Old Marigold, in room B-117. Booking Old Marigold requires a green badge. Sessions on the rig last at most 90 minutes. The rig is recalibrated every second Thursday by the duty technician.\",\n    \"meta_data\": {\n      \"chunk\": 1,\n      \"chunk_size\": 243,\n      \"linked_to\": \"\"\n    }\n  },\n  {\n    \"name\": \"onboarding\",\n    \"content\": \"New staff receive a blue badge on day one. A green badge is granted after passing the Tier 2 safety course, which is offered every six weeks. Every new hire is paired with a mentor for 120 days.\",\n    \"meta_data\": {\n      \"chunk\": 1,\n      \"chunk_size\": 194,\n      \"linked_to\": \"\"\n    }\n  },\n  {\n    \"name\": \"travel\",\n    \"content\": \"Conference travel at Halvorsen Lab is approved by Ingrid Tveit. The daily meal allowance is 41 euros. Requests must be filed 18 days before departure.\",\n    \"meta_data\": {\n      \"chunk\": 1,\n      \"chunk_size\": 150,\n      \"linked_to\": \"\"\n    }\n  },\n  {\n    \"name\": \"safety\",\n    \"content\": \"Spills of cryogenic fluid are reported on extension 4471. The muster point for a fire alarm is the east bicycle shed. Fire drills take place on the first Monday of each quarter.\",\n    \"meta_data\": {\n      \"chunk\": 1,\n      \"chunk_size\": 177,\n      \"linked_to\": \"\"\n    }\n  }\n]"
+              }
+            ],
+            "previous_response_id": "resp_06355e338aaa05b0006ae883be9b5087d2afa39778560e79fa",
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "search_knowledge_base",
+                "description": "Use this function to search the knowledge base for information about a query.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "description": "The query to search for."
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ],
+                  "additionalProperties": false
+                },
+                "type": "function"
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 2,
+      "embedding_calls": 1,
+      "input_tokens": 736,
+      "output_tokens": 63,
+      "embedding_tokens": 15
+    },
+    "not_in_documents": {
+      "output": "I don't know",
+      "error": null,
+      "seconds": 2.9120050829369575,
+      "checks": {
+        "contains (\"don't know\",)": true,
+        "excludes ('euro',)": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "Answer questions about the Halvorsen Lab handbook. Always search the handbook first. Answer only from what the search returns. If it does not contain the answer, reply exactly: I don't know.\n\n<knowledge_base>\nYou have a knowledge base you can search using the search_knowledge_base tool. Search before answering questions\u2014don't assume you know the answer. For ambiguous questions, search first rather than asking for clarification.\n</knowledge_base>"
+              },
+              {
+                "role": "user",
+                "content": "What is the parking fee at Halvorsen Lab?"
+              }
+            ],
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "search_knowledge_base",
+                "description": "Use this function to search the knowledge base for information about a query.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "description": "The query to search for."
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ],
+                  "additionalProperties": false
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/embeddings",
+          "body": {
+            "model": "text-embedding-3-small",
+            "input": "parking fee at Halvorsen Lab handbook",
+            "dimensions": 1536,
+            "encoding_format": "float"
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "type": "function_call_output",
+                "call_id": "call_QN2NAEP0j0ZKjelal0SG1JiW",
+                "output": "[\n  {\n    \"name\": \"travel\",\n    \"content\": \"Conference travel at Halvorsen Lab is approved by Ingrid Tveit. The daily meal allowance is 41 euros. Requests must be filed 18 days before departure.\",\n    \"meta_data\": {\n      \"chunk\": 1,\n      \"chunk_size\": 150,\n      \"linked_to\": \"\"\n    }\n  },\n  {\n    \"name\": \"equipment\",\n    \"content\": \"The Halvorsen Lab keeps its calibration rig, nicknamed Old Marigold, in room B-117. Booking Old Marigold requires a green badge. Sessions on the rig last at most 90 minutes. The rig is recalibrated every second Thursday by the duty technician.\",\n    \"meta_data\": {\n      \"chunk\": 1,\n      \"chunk_size\": 243,\n      \"linked_to\": \"\"\n    }\n  },\n  {\n    \"name\": \"safety\",\n    \"content\": \"Spills of cryogenic fluid are reported on extension 4471. The muster point for a fire alarm is the east bicycle shed. Fire drills take place on the first Monday of each quarter.\",\n    \"meta_data\": {\n      \"chunk\": 1,\n      \"chunk_size\": 177,\n      \"linked_to\": \"\"\n    }\n  },\n  {\n    \"name\": \"onboarding\",\n    \"content\": \"New staff receive a blue badge on day one. A green badge is granted after passing the Tier 2 safety course, which is offered every six weeks. Every new hire is paired with a mentor for 120 days.\",\n    \"meta_data\": {\n      \"chunk\": 1,\n      \"chunk_size\": 194,\n      \"linked_to\": \"\"\n    }\n  }\n]"
+              }
+            ],
+            "previous_response_id": "resp_018dc5555b03863c006ae883c20b5087d2bfec61750fc02ab2",
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "search_knowledge_base",
+                "description": "Use this function to search the knowledge base for information about a query.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "description": "The query to search for."
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ],
+                  "additionalProperties": false
+                },
+                "type": "function"
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 2,
+      "embedding_calls": 1,
+      "input_tokens": 721,
+      "output_tokens": 34,
+      "embedding_tokens": 10
+    }
+  },
+  "complexity": {
+    "loc": 21,
+    "deps": [
+      "agno"
+    ],
+    "import_seconds": 1.1936317910440266,
+    "modules": 1641
+  }
+}

@@ -1,0 +1,1055 @@
+{
+  "cases": {
+    "both_specialists": {
+      "output": "Done \u2014 I scheduled the meeting with design@acme.dev for next Tuesday from 2:00 PM to 3:00 PM, and sent the email reminder about reviewing the new mockups.",
+      "error": null,
+      "seconds": 13.17712420783937,
+      "checks": {
+        "called create_calendar_event x1": true,
+        "called send_email x1": true
+      },
+      "tool_calls": [
+        {
+          "name": "get_available_time_slots",
+          "args": [],
+          "kwargs": {
+            "attendees": [
+              "design@acme.dev"
+            ],
+            "date": "2026-11-10",
+            "duration_minutes": 60
+          }
+        },
+        {
+          "name": "create_calendar_event",
+          "args": [],
+          "kwargs": {
+            "title": "Meeting with design@acme.dev",
+            "start_time": "2026-11-10T14:00:00",
+            "end_time": "2026-11-10T15:00:00",
+            "attendees": [
+              "design@acme.dev"
+            ],
+            "location": ""
+          }
+        },
+        {
+          "name": "send_email",
+          "args": [],
+          "kwargs": {
+            "to": [
+              "design@acme.dev"
+            ],
+            "subject": "Reminder: Review New Mockups",
+            "body": "Hi Design Team,\n\nJust a quick reminder to review the new mockups ahead of the upcoming meeting. Please take a look when you have a chance.\n\nThanks,\n[Your Name]"
+          }
+        }
+      ],
+      "requests": [
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "You are a helpful personal assistant. You can schedule calendar events and send emails. Break down user requests and delegate each part. Delegate only what the user asked for.\n\n<team>\nYou coordinate this team to fulfill the user's request. You have a team of specialists, listed below. Delegate to members when their expertise or tools are needed; answer directly \u2014 including with your own tools \u2014 when they are not.\n\n<team_members>\n<member id=\"calendar\" name=\"Calendar\">\n  Role: Schedules calendar events\n</member>\n<member id=\"email\" name=\"Email\">\n  Role: Sends emails\n</member>\n</team_members>\n\n<delegation>\nYou work in coordinate mode: you hand sub-tasks to members with `delegate_task_to_member` and write the answer yourself.\n\n- Match each sub-task to the member whose role and description fit it best. When sub-tasks do not depend on each other, delegate them in the same turn instead of one per turn.\n- A member's output is evidence, not your answer. When a member fails, refuses, or returns nothing, say so plainly and name what it reported \u2014 never supply a cause, source, or finding the member did not state.\n- If a response is off-target, re-delegate with clearer instructions or try a better-suited member. If it still misses, answer with what you have and say what is missing \u2014 do not work through the roster.\n- Write one answer. Resolve contradictions, add structure, and fill gaps only where you can state the basis for it. Never concatenate member outputs.\n\nMembers do not see this conversation. Each one gets only the text you write for it, so carry over every name, number and earlier answer it needs, and say what a good result looks like.\nMember ids are the ids shown in the roster above, used exactly as written.\n</delegation>\n</team>"
+              },
+              {
+                "role": "user",
+                "content": "Schedule a meeting with design@acme.dev next Tuesday at 2pm for 1 hour, and send them an email reminder about reviewing the new mockups."
+              }
+            ],
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "delegate_task_to_member",
+                "description": "Use this function to delegate a task to the selected team member.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "member_id": {
+                      "type": "string",
+                      "description": "(str) The ID of the member to delegate the task to, exactly as it appears in <team_members>."
+                    },
+                    "task": {
+                      "type": "string",
+                      "description": "(str) A clear and concise description of the task the member should achieve, including what a good result looks like."
+                    }
+                  },
+                  "required": [
+                    "member_id",
+                    "task"
+                  ],
+                  "additionalProperties": false
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "<your_role>\nSchedules calendar events\n</your_role>\n\nToday's date is 2026-11-02. You are a calendar scheduling assistant. Parse natural language scheduling requests into ISO datetime formats. Use get_available_time_slots to check availability when needed. Use create_calendar_event to schedule events. Always confirm what was scheduled in your final response."
+              },
+              {
+                "role": "user",
+                "content": "Schedule a meeting with design@acme.dev next Tuesday at 2:00 PM for 1 hour. Use the user's calendar and ensure the event includes the attendee design@acme.dev. A good result is a confirmed meeting time from 2:00 PM to 3:00 PM next Tuesday."
+              }
+            ],
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "create_calendar_event",
+                "description": "Create a calendar event. Requires exact ISO datetime format.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "start_time": {
+                      "type": "string"
+                    },
+                    "end_time": {
+                      "type": "string"
+                    },
+                    "attendees": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "location": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "start_time",
+                    "end_time",
+                    "attendees"
+                  ]
+                },
+                "type": "function"
+              },
+              {
+                "name": "get_available_time_slots",
+                "description": "Check calendar availability for given attendees on a specific date.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "attendees": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "date": {
+                      "type": "string"
+                    },
+                    "duration_minutes": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "attendees",
+                    "date",
+                    "duration_minutes"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "type": "function_call_output",
+                "call_id": "call_qzcUpufNwoXrfLbCdDAhZT5Q",
+                "output": "['09:00', '14:00', '16:00']"
+              }
+            ],
+            "previous_response_id": "resp_08120f179cab7462006ae883d501ac87d29cf5705aeb902ec2",
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "create_calendar_event",
+                "description": "Create a calendar event. Requires exact ISO datetime format.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "start_time": {
+                      "type": "string"
+                    },
+                    "end_time": {
+                      "type": "string"
+                    },
+                    "attendees": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "location": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "start_time",
+                    "end_time",
+                    "attendees"
+                  ]
+                },
+                "type": "function"
+              },
+              {
+                "name": "get_available_time_slots",
+                "description": "Check calendar availability for given attendees on a specific date.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "attendees": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "date": {
+                      "type": "string"
+                    },
+                    "duration_minutes": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "attendees",
+                    "date",
+                    "duration_minutes"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "type": "function_call_output",
+                "call_id": "call_ufTXQ1bJmbwEYQiztSXMHiRt",
+                "output": "Event created: Meeting with design@acme.dev from 2026-11-10T14:00:00 to 2026-11-10T15:00:00 with 1 attendees"
+              }
+            ],
+            "previous_response_id": "resp_08120f179cab7462006ae883d6bf6487d2a210d883929ca0c0",
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "create_calendar_event",
+                "description": "Create a calendar event. Requires exact ISO datetime format.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "start_time": {
+                      "type": "string"
+                    },
+                    "end_time": {
+                      "type": "string"
+                    },
+                    "attendees": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "location": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "start_time",
+                    "end_time",
+                    "attendees"
+                  ]
+                },
+                "type": "function"
+              },
+              {
+                "name": "get_available_time_slots",
+                "description": "Check calendar availability for given attendees on a specific date.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "attendees": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "date": {
+                      "type": "string"
+                    },
+                    "duration_minutes": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "attendees",
+                    "date",
+                    "duration_minutes"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "<your_role>\nSends emails\n</your_role>\n\nYou are an email assistant. Compose professional emails based on natural language requests. Use send_email to send the message. Always confirm what was sent in your final response."
+              },
+              {
+                "role": "user",
+                "content": "Send an email to design@acme.dev reminding them to review the new mockups. Keep it brief and professional. A good result is a sent email that clearly references the mockups and the upcoming meeting."
+              }
+            ],
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "send_email",
+                "description": "Send an email via email API. Requires properly formatted addresses.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "to": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "subject": {
+                      "type": "string"
+                    },
+                    "body": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "to",
+                    "subject",
+                    "body"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "type": "function_call_output",
+                "call_id": "call_m3PVIDJzxOJoaTqoSL5AY4Oo",
+                "output": "Email sent to design@acme.dev - Subject: Reminder: Review New Mockups"
+              }
+            ],
+            "previous_response_id": "resp_0e201bc18c26f5f1006ae883da92c087d2ad152b7d3b90ff34",
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "send_email",
+                "description": "Send an email via email API. Requires properly formatted addresses.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "to": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "subject": {
+                      "type": "string"
+                    },
+                    "body": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "to",
+                    "subject",
+                    "body"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "type": "function_call_output",
+                "call_id": "call_sTgVjwrx7Rf6lCt2fsmcpcWV",
+                "output": "Scheduled: **Meeting with design@acme.dev** on **Tuesday, 2026-11-10 from 2:00 PM to 3:00 PM**.\n\nAttendee included: **design@acme.dev**."
+              },
+              {
+                "type": "function_call_output",
+                "call_id": "call_0OyKRvPzAz7cPj2UsoVxfnC4",
+                "output": "Sent a brief professional reminder to design@acme.dev referencing the new mockups and the upcoming meeting."
+              }
+            ],
+            "previous_response_id": "resp_038af96e6d845c36006ae883d2df8887d29307b16cad985a05",
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "delegate_task_to_member",
+                "description": "Use this function to delegate a task to the selected team member.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "member_id": {
+                      "type": "string",
+                      "description": "(str) The ID of the member to delegate the task to, exactly as it appears in <team_members>."
+                    },
+                    "task": {
+                      "type": "string",
+                      "description": "(str) A clear and concise description of the task the member should achieve, including what a good result looks like."
+                    }
+                  },
+                  "required": [
+                    "member_id",
+                    "task"
+                  ],
+                  "additionalProperties": false
+                },
+                "type": "function"
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 7,
+      "embedding_calls": 0,
+      "input_tokens": 2673,
+      "output_tokens": 472,
+      "embedding_tokens": 0
+    },
+    "calendar_only": {
+      "output": "Done \u2014 I booked a 30-minute sync with ops@acme.dev for next Friday, November 6, 2026, from 9:00 AM to 9:30 AM.",
+      "error": null,
+      "seconds": 9.304287916980684,
+      "checks": {
+        "called create_calendar_event x1": true,
+        "did not call send_email": true
+      },
+      "tool_calls": [
+        {
+          "name": "get_available_time_slots",
+          "args": [],
+          "kwargs": {
+            "attendees": [
+              "ops@acme.dev"
+            ],
+            "date": "2026-11-06",
+            "duration_minutes": 30
+          }
+        },
+        {
+          "name": "create_calendar_event",
+          "args": [],
+          "kwargs": {
+            "title": "Sync meeting",
+            "start_time": "2026-11-06T09:00:00",
+            "end_time": "2026-11-06T09:30:00",
+            "attendees": [
+              "ops@acme.dev"
+            ],
+            "location": ""
+          }
+        }
+      ],
+      "requests": [
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "You are a helpful personal assistant. You can schedule calendar events and send emails. Break down user requests and delegate each part. Delegate only what the user asked for.\n\n<team>\nYou coordinate this team to fulfill the user's request. You have a team of specialists, listed below. Delegate to members when their expertise or tools are needed; answer directly \u2014 including with your own tools \u2014 when they are not.\n\n<team_members>\n<member id=\"calendar\" name=\"Calendar\">\n  Role: Schedules calendar events\n</member>\n<member id=\"email\" name=\"Email\">\n  Role: Sends emails\n</member>\n</team_members>\n\n<delegation>\nYou work in coordinate mode: you hand sub-tasks to members with `delegate_task_to_member` and write the answer yourself.\n\n- Match each sub-task to the member whose role and description fit it best. When sub-tasks do not depend on each other, delegate them in the same turn instead of one per turn.\n- A member's output is evidence, not your answer. When a member fails, refuses, or returns nothing, say so plainly and name what it reported \u2014 never supply a cause, source, or finding the member did not state.\n- If a response is off-target, re-delegate with clearer instructions or try a better-suited member. If it still misses, answer with what you have and say what is missing \u2014 do not work through the roster.\n- Write one answer. Resolve contradictions, add structure, and fill gaps only where you can state the basis for it. Never concatenate member outputs.\n\nMembers do not see this conversation. Each one gets only the text you write for it, so carry over every name, number and earlier answer it needs, and say what a good result looks like.\nMember ids are the ids shown in the roster above, used exactly as written.\n</delegation>\n</team>"
+              },
+              {
+                "role": "user",
+                "content": "Book a 30 minute sync with ops@acme.dev next Friday at 9am."
+              }
+            ],
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "delegate_task_to_member",
+                "description": "Use this function to delegate a task to the selected team member.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "member_id": {
+                      "type": "string",
+                      "description": "(str) The ID of the member to delegate the task to, exactly as it appears in <team_members>."
+                    },
+                    "task": {
+                      "type": "string",
+                      "description": "(str) A clear and concise description of the task the member should achieve, including what a good result looks like."
+                    }
+                  },
+                  "required": [
+                    "member_id",
+                    "task"
+                  ],
+                  "additionalProperties": false
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "<your_role>\nSchedules calendar events\n</your_role>\n\nToday's date is 2026-11-02. You are a calendar scheduling assistant. Parse natural language scheduling requests into ISO datetime formats. Use get_available_time_slots to check availability when needed. Use create_calendar_event to schedule events. Always confirm what was scheduled in your final response."
+              },
+              {
+                "role": "user",
+                "content": "Schedule a 30-minute calendar event for next Friday at 9:00 AM with attendee ops@acme.dev. Please create the event as a sync meeting. Good result: event is booked for 30 minutes at that time and the invite includes ops@acme.dev."
+              }
+            ],
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "create_calendar_event",
+                "description": "Create a calendar event. Requires exact ISO datetime format.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "start_time": {
+                      "type": "string"
+                    },
+                    "end_time": {
+                      "type": "string"
+                    },
+                    "attendees": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "location": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "start_time",
+                    "end_time",
+                    "attendees"
+                  ]
+                },
+                "type": "function"
+              },
+              {
+                "name": "get_available_time_slots",
+                "description": "Check calendar availability for given attendees on a specific date.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "attendees": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "date": {
+                      "type": "string"
+                    },
+                    "duration_minutes": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "attendees",
+                    "date",
+                    "duration_minutes"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "type": "function_call_output",
+                "call_id": "call_kcd9dkxswO7P6Vyadm4Zbuah",
+                "output": "['09:00', '14:00', '16:00']"
+              }
+            ],
+            "previous_response_id": "resp_080b6bd8e237b60a006ae883e2cfcc87d280ac2e4e0644f3eb",
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "create_calendar_event",
+                "description": "Create a calendar event. Requires exact ISO datetime format.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "start_time": {
+                      "type": "string"
+                    },
+                    "end_time": {
+                      "type": "string"
+                    },
+                    "attendees": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "location": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "start_time",
+                    "end_time",
+                    "attendees"
+                  ]
+                },
+                "type": "function"
+              },
+              {
+                "name": "get_available_time_slots",
+                "description": "Check calendar availability for given attendees on a specific date.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "attendees": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "date": {
+                      "type": "string"
+                    },
+                    "duration_minutes": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "attendees",
+                    "date",
+                    "duration_minutes"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "type": "function_call_output",
+                "call_id": "call_dr1Q9HW7cBBfTVIm8xfIXdiH",
+                "output": "Event created: Sync meeting from 2026-11-06T09:00:00 to 2026-11-06T09:30:00 with 1 attendees"
+              }
+            ],
+            "previous_response_id": "resp_080b6bd8e237b60a006ae883e46b9087d2a4d87c757e5ba5f4",
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "create_calendar_event",
+                "description": "Create a calendar event. Requires exact ISO datetime format.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "start_time": {
+                      "type": "string"
+                    },
+                    "end_time": {
+                      "type": "string"
+                    },
+                    "attendees": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "location": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "start_time",
+                    "end_time",
+                    "attendees"
+                  ]
+                },
+                "type": "function"
+              },
+              {
+                "name": "get_available_time_slots",
+                "description": "Check calendar availability for given attendees on a specific date.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "attendees": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "date": {
+                      "type": "string"
+                    },
+                    "duration_minutes": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "attendees",
+                    "date",
+                    "duration_minutes"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "type": "function_call_output",
+                "call_id": "call_nroBMu2ZRMUyCl7shdyaS29z",
+                "output": "Scheduled: **Sync meeting** for **Friday, 2026-11-06**, from **9:00 AM to 9:30 AM**, with attendee **ops@acme.dev**."
+              }
+            ],
+            "previous_response_id": "resp_03afef76194d953a006ae883e0048487d2bdab89e2a110af1b",
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "delegate_task_to_member",
+                "description": "Use this function to delegate a task to the selected team member.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "member_id": {
+                      "type": "string",
+                      "description": "(str) The ID of the member to delegate the task to, exactly as it appears in <team_members>."
+                    },
+                    "task": {
+                      "type": "string",
+                      "description": "(str) A clear and concise description of the task the member should achieve, including what a good result looks like."
+                    }
+                  },
+                  "required": [
+                    "member_id",
+                    "task"
+                  ],
+                  "additionalProperties": false
+                },
+                "type": "function"
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 5,
+      "embedding_calls": 0,
+      "input_tokens": 2096,
+      "output_tokens": 275,
+      "embedding_tokens": 0
+    },
+    "email_only": {
+      "output": "Done \u2014 I emailed finance@acme.dev to let them know the Q3 report is ready.",
+      "error": null,
+      "seconds": 6.352550416951999,
+      "checks": {
+        "called send_email x1": true,
+        "did not call create_calendar_event": true
+      },
+      "tool_calls": [
+        {
+          "name": "send_email",
+          "args": [],
+          "kwargs": {
+            "to": [
+              "finance@acme.dev"
+            ],
+            "subject": "Q3 report is ready",
+            "body": "Hello Finance Team,\n\nThe Q3 report is ready.\n\nBest,\n[Your Name]"
+          }
+        }
+      ],
+      "requests": [
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "You are a helpful personal assistant. You can schedule calendar events and send emails. Break down user requests and delegate each part. Delegate only what the user asked for.\n\n<team>\nYou coordinate this team to fulfill the user's request. You have a team of specialists, listed below. Delegate to members when their expertise or tools are needed; answer directly \u2014 including with your own tools \u2014 when they are not.\n\n<team_members>\n<member id=\"calendar\" name=\"Calendar\">\n  Role: Schedules calendar events\n</member>\n<member id=\"email\" name=\"Email\">\n  Role: Sends emails\n</member>\n</team_members>\n\n<delegation>\nYou work in coordinate mode: you hand sub-tasks to members with `delegate_task_to_member` and write the answer yourself.\n\n- Match each sub-task to the member whose role and description fit it best. When sub-tasks do not depend on each other, delegate them in the same turn instead of one per turn.\n- A member's output is evidence, not your answer. When a member fails, refuses, or returns nothing, say so plainly and name what it reported \u2014 never supply a cause, source, or finding the member did not state.\n- If a response is off-target, re-delegate with clearer instructions or try a better-suited member. If it still misses, answer with what you have and say what is missing \u2014 do not work through the roster.\n- Write one answer. Resolve contradictions, add structure, and fill gaps only where you can state the basis for it. Never concatenate member outputs.\n\nMembers do not see this conversation. Each one gets only the text you write for it, so carry over every name, number and earlier answer it needs, and say what a good result looks like.\nMember ids are the ids shown in the roster above, used exactly as written.\n</delegation>\n</team>"
+              },
+              {
+                "role": "user",
+                "content": "Email finance@acme.dev that the Q3 report is ready."
+              }
+            ],
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "delegate_task_to_member",
+                "description": "Use this function to delegate a task to the selected team member.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "member_id": {
+                      "type": "string",
+                      "description": "(str) The ID of the member to delegate the task to, exactly as it appears in <team_members>."
+                    },
+                    "task": {
+                      "type": "string",
+                      "description": "(str) A clear and concise description of the task the member should achieve, including what a good result looks like."
+                    }
+                  },
+                  "required": [
+                    "member_id",
+                    "task"
+                  ],
+                  "additionalProperties": false
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "<your_role>\nSends emails\n</your_role>\n\nYou are an email assistant. Compose professional emails based on natural language requests. Use send_email to send the message. Always confirm what was sent in your final response."
+              },
+              {
+                "role": "user",
+                "content": "Send an email to finance@acme.dev stating that the Q3 report is ready. A good result looks like a sent email confirmation and the exact recipient/message used."
+              }
+            ],
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "send_email",
+                "description": "Send an email via email API. Requires properly formatted addresses.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "to": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "subject": {
+                      "type": "string"
+                    },
+                    "body": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "to",
+                    "subject",
+                    "body"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "type": "function_call_output",
+                "call_id": "call_7AAsDnX7Pd7uuMXABxN4FdsD",
+                "output": "Email sent to finance@acme.dev - Subject: Q3 report is ready"
+              }
+            ],
+            "previous_response_id": "resp_038958d4e488d6a0006ae883eacc4c87d2b60706153200a955",
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "send_email",
+                "description": "Send an email via email API. Requires properly formatted addresses.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "to": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "subject": {
+                      "type": "string"
+                    },
+                    "body": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "to",
+                    "subject",
+                    "body"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "type": "function_call_output",
+                "call_id": "call_nIbBpXSmbnumhdhIfQCimRqJ",
+                "output": "Sent email confirmation: Email sent to finance@acme.dev - Subject: Q3 report is ready\n\nExact recipient/message used:\n- To: finance@acme.dev\n- Subject: Q3 report is ready\n- Body:\n  Hello Finance Team,\n\n  The Q3 report is ready.\n\n  Best,\n  [Your Name]"
+              }
+            ],
+            "previous_response_id": "resp_05d7905c2b8efb09006ae883e9596087d29c51b230e5306a1d",
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "delegate_task_to_member",
+                "description": "Use this function to delegate a task to the selected team member.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "member_id": {
+                      "type": "string",
+                      "description": "(str) The ID of the member to delegate the task to, exactly as it appears in <team_members>."
+                    },
+                    "task": {
+                      "type": "string",
+                      "description": "(str) A clear and concise description of the task the member should achieve, including what a good result looks like."
+                    }
+                  },
+                  "required": [
+                    "member_id",
+                    "task"
+                  ],
+                  "additionalProperties": false
+                },
+                "type": "function"
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 4,
+      "embedding_calls": 0,
+      "input_tokens": 1508,
+      "output_tokens": 210,
+      "embedding_tokens": 0
+    }
+  },
+  "complexity": {
+    "loc": 31,
+    "deps": [
+      "agno"
+    ],
+    "import_seconds": 0.5882986250799149,
+    "modules": 1199
+  }
+}

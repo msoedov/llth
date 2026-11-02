@@ -1,0 +1,22 @@
+[project]
+name = "langchain-hard-way"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "agno",
+    "lancedb",
+    "langchain",
+    "langchain-openai",
+    "langchain-text-splitters",
+    "langgraph",
+    "langsmith",
+    "numpy",
+    "openai",
+    "pylance",
+]
+
+[dependency-groups]
+dev = ["inline-snapshot", "pytest"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

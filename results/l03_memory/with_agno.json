@@ -1,0 +1,355 @@
+{
+  "cases": {
+    "recalls": {
+      "output": [
+        "Nice to meet you, Bob.",
+        "Your name is Bob."
+      ],
+      "error": null,
+      "seconds": 2.9356854159850627,
+      "checks": {
+        "contains ('Bob',)": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "You are a helpful assistant. Keep replies to one short sentence."
+              },
+              {
+                "role": "user",
+                "content": "My name is Bob."
+              }
+            ],
+            "reasoning": {},
+            "store": true
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "user",
+                "content": "What's my name?"
+              }
+            ],
+            "previous_response_id": "resp_0d83ab76c673bd23006ae88385430487d289a9b468d95e2da6",
+            "reasoning": {},
+            "store": true
+          }
+        }
+      ],
+      "llm_calls": 2,
+      "embedding_calls": 0,
+      "input_tokens": 77,
+      "output_tokens": 20,
+      "embedding_tokens": 0
+    },
+    "threads_are_isolated": {
+      "output": [
+        "Nice to meet you, Bob.",
+        "I don\u2019t know."
+      ],
+      "error": null,
+      "seconds": 2.750085333827883,
+      "checks": {
+        "excludes ('Bob',)": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "You are a helpful assistant. Keep replies to one short sentence."
+              },
+              {
+                "role": "user",
+                "content": "My name is Bob."
+              }
+            ],
+            "reasoning": {},
+            "store": true
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "You are a helpful assistant. Keep replies to one short sentence."
+              },
+              {
+                "role": "user",
+                "content": "What's my name? If you do not know, say you do not know."
+              }
+            ],
+            "reasoning": {},
+            "store": true
+          }
+        }
+      ],
+      "llm_calls": 2,
+      "embedding_calls": 0,
+      "input_tokens": 67,
+      "output_tokens": 20,
+      "embedding_tokens": 0
+    },
+    "survives_interleaving": {
+      "output": [
+        "Nice to meet you, Bob.",
+        "Nice to meet you, Carol.",
+        "Your name is Bob.",
+        "Your name is Carol."
+      ],
+      "error": null,
+      "seconds": 5.117525916080922,
+      "checks": {
+        "contains ('Bob',)": true,
+        "contains ('Carol',)": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "You are a helpful assistant. Keep replies to one short sentence."
+              },
+              {
+                "role": "user",
+                "content": "My name is Bob."
+              }
+            ],
+            "reasoning": {},
+            "store": true
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "You are a helpful assistant. Keep replies to one short sentence."
+              },
+              {
+                "role": "user",
+                "content": "My name is Carol."
+              }
+            ],
+            "reasoning": {},
+            "store": true
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "user",
+                "content": "What's my name?"
+              }
+            ],
+            "previous_response_id": "resp_01f6b1bb6c833df5006ae8838addd487d2acd001c1d9dd003f",
+            "reasoning": {},
+            "store": true
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "user",
+                "content": "What's my name?"
+              }
+            ],
+            "previous_response_id": "resp_0079c11fc2b5c83e006ae8838c0cf487d29d5f03fe379ea8f1",
+            "reasoning": {},
+            "store": true
+          }
+        }
+      ],
+      "llm_calls": 4,
+      "embedding_calls": 0,
+      "input_tokens": 154,
+      "output_tokens": 40,
+      "embedding_tokens": 0
+    },
+    "long_thread": {
+      "output": [
+        "Nice to meet you, Bob.",
+        "1 is the multiplicative identity, meaning any number times 1 equals itself.",
+        "2 is the smallest prime number.",
+        "3 is the smallest odd prime number.",
+        "4 is the first composite number.",
+        "5 is a prime number.",
+        "6 is the smallest perfect number.",
+        "Your name is Bob."
+      ],
+      "error": null,
+      "seconds": 12.19011295796372,
+      "checks": {
+        "contains ('Bob',)": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "You are a helpful assistant. Keep replies to one short sentence."
+              },
+              {
+                "role": "user",
+                "content": "My name is Bob."
+              }
+            ],
+            "reasoning": {},
+            "store": true
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "user",
+                "content": "Name one fact about the number 1."
+              }
+            ],
+            "previous_response_id": "resp_0f0dd9c73a3fe96a006ae8838ffc2887d29068f1d82d7ece29",
+            "reasoning": {},
+            "store": true
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "user",
+                "content": "Name one fact about the number 2."
+              }
+            ],
+            "previous_response_id": "resp_0f0dd9c73a3fe96a006ae88391880c87d2ad9712f215aac138",
+            "reasoning": {},
+            "store": true
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "user",
+                "content": "Name one fact about the number 3."
+              }
+            ],
+            "previous_response_id": "resp_0f0dd9c73a3fe96a006ae88392db3487d29176b4de46b615bc",
+            "reasoning": {},
+            "store": true
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "user",
+                "content": "Name one fact about the number 4."
+              }
+            ],
+            "previous_response_id": "resp_0f0dd9c73a3fe96a006ae883944bd487d29b056559fe30383a",
+            "reasoning": {},
+            "store": true
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "user",
+                "content": "Name one fact about the number 5."
+              }
+            ],
+            "previous_response_id": "resp_0f0dd9c73a3fe96a006ae883961e7087d282d1847243e75ec3",
+            "reasoning": {},
+            "store": true
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "user",
+                "content": "Name one fact about the number 6."
+              }
+            ],
+            "previous_response_id": "resp_0f0dd9c73a3fe96a006ae883979ac887d294b9d2f09dfa5e65",
+            "reasoning": {},
+            "store": true
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "user",
+                "content": "What's my name?"
+              }
+            ],
+            "previous_response_id": "resp_0f0dd9c73a3fe96a006ae88399143487d2bd8e34a95ad24cf2",
+            "reasoning": {},
+            "store": true
+          }
+        }
+      ],
+      "llm_calls": 8,
+      "embedding_calls": 0,
+      "input_tokens": 1003,
+      "output_tokens": 95,
+      "embedding_tokens": 0
+    }
+  },
+  "complexity": {
+    "loc": 16,
+    "deps": [
+      "agno"
+    ],
+    "import_seconds": 0.5533720408566296,
+    "modules": 1184
+  }
+}

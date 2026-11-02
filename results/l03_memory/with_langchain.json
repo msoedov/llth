@@ -1,0 +1,618 @@
+{
+  "cases": {
+    "recalls": {
+      "output": [
+        "Nice to meet you, Bob.",
+        "Your name is Bob."
+      ],
+      "error": null,
+      "seconds": 2.1095517920330167,
+      "checks": {
+        "contains ('Bob',)": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are a helpful assistant. Keep replies to one short sentence.",
+                "role": "system"
+              },
+              {
+                "content": "My name is Bob.",
+                "role": "user"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are a helpful assistant. Keep replies to one short sentence.",
+                "role": "system"
+              },
+              {
+                "content": "My name is Bob.",
+                "role": "user"
+              },
+              {
+                "content": "Nice to meet you, Bob.",
+                "role": "assistant"
+              },
+              {
+                "content": "What's my name?",
+                "role": "user"
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 2,
+      "embedding_calls": 0,
+      "input_tokens": 77,
+      "output_tokens": 18,
+      "embedding_tokens": 0
+    },
+    "threads_are_isolated": {
+      "output": [
+        "Nice to meet you, Bob.",
+        "I don\u2019t know."
+      ],
+      "error": null,
+      "seconds": 1.4432014171034098,
+      "checks": {
+        "excludes ('Bob',)": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are a helpful assistant. Keep replies to one short sentence.",
+                "role": "system"
+              },
+              {
+                "content": "My name is Bob.",
+                "role": "user"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are a helpful assistant. Keep replies to one short sentence.",
+                "role": "system"
+              },
+              {
+                "content": "What's my name? If you do not know, say you do not know.",
+                "role": "user"
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 2,
+      "embedding_calls": 0,
+      "input_tokens": 67,
+      "output_tokens": 18,
+      "embedding_tokens": 0
+    },
+    "survives_interleaving": {
+      "output": [
+        "Nice to meet you, Bob.",
+        "Nice to meet you, Carol.",
+        "Your name is Bob.",
+        "Your name is Carol."
+      ],
+      "error": null,
+      "seconds": 3.0936389579437673,
+      "checks": {
+        "contains ('Bob',)": true,
+        "contains ('Carol',)": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are a helpful assistant. Keep replies to one short sentence.",
+                "role": "system"
+              },
+              {
+                "content": "My name is Bob.",
+                "role": "user"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are a helpful assistant. Keep replies to one short sentence.",
+                "role": "system"
+              },
+              {
+                "content": "My name is Carol.",
+                "role": "user"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are a helpful assistant. Keep replies to one short sentence.",
+                "role": "system"
+              },
+              {
+                "content": "My name is Bob.",
+                "role": "user"
+              },
+              {
+                "content": "Nice to meet you, Bob.",
+                "role": "assistant"
+              },
+              {
+                "content": "What's my name?",
+                "role": "user"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are a helpful assistant. Keep replies to one short sentence.",
+                "role": "system"
+              },
+              {
+                "content": "My name is Carol.",
+                "role": "user"
+              },
+              {
+                "content": "Nice to meet you, Carol.",
+                "role": "assistant"
+              },
+              {
+                "content": "What's my name?",
+                "role": "user"
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 4,
+      "embedding_calls": 0,
+      "input_tokens": 154,
+      "output_tokens": 36,
+      "embedding_tokens": 0
+    },
+    "long_thread": {
+      "output": [
+        "Nice to meet you, Bob.",
+        "1 is the multiplicative identity, meaning any number multiplied by 1 stays the same.",
+        "2 is the only even prime number.",
+        "3 is the smallest odd prime number.",
+        "4 is the smallest composite number.",
+        "5 is a prime number.",
+        "6 is the smallest perfect number.",
+        "Your name is Bob."
+      ],
+      "error": null,
+      "seconds": 6.066506124800071,
+      "checks": {
+        "contains ('Bob',)": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are a helpful assistant. Keep replies to one short sentence.",
+                "role": "system"
+              },
+              {
+                "content": "My name is Bob.",
+                "role": "user"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are a helpful assistant. Keep replies to one short sentence.",
+                "role": "system"
+              },
+              {
+                "content": "My name is Bob.",
+                "role": "user"
+              },
+              {
+                "content": "Nice to meet you, Bob.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 1.",
+                "role": "user"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are a helpful assistant. Keep replies to one short sentence.",
+                "role": "system"
+              },
+              {
+                "content": "My name is Bob.",
+                "role": "user"
+              },
+              {
+                "content": "Nice to meet you, Bob.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 1.",
+                "role": "user"
+              },
+              {
+                "content": "1 is the multiplicative identity, meaning any number multiplied by 1 stays the same.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 2.",
+                "role": "user"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are a helpful assistant. Keep replies to one short sentence.",
+                "role": "system"
+              },
+              {
+                "content": "My name is Bob.",
+                "role": "user"
+              },
+              {
+                "content": "Nice to meet you, Bob.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 1.",
+                "role": "user"
+              },
+              {
+                "content": "1 is the multiplicative identity, meaning any number multiplied by 1 stays the same.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 2.",
+                "role": "user"
+              },
+              {
+                "content": "2 is the only even prime number.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 3.",
+                "role": "user"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are a helpful assistant. Keep replies to one short sentence.",
+                "role": "system"
+              },
+              {
+                "content": "My name is Bob.",
+                "role": "user"
+              },
+              {
+                "content": "Nice to meet you, Bob.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 1.",
+                "role": "user"
+              },
+              {
+                "content": "1 is the multiplicative identity, meaning any number multiplied by 1 stays the same.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 2.",
+                "role": "user"
+              },
+              {
+                "content": "2 is the only even prime number.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 3.",
+                "role": "user"
+              },
+              {
+                "content": "3 is the smallest odd prime number.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 4.",
+                "role": "user"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are a helpful assistant. Keep replies to one short sentence.",
+                "role": "system"
+              },
+              {
+                "content": "My name is Bob.",
+                "role": "user"
+              },
+              {
+                "content": "Nice to meet you, Bob.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 1.",
+                "role": "user"
+              },
+              {
+                "content": "1 is the multiplicative identity, meaning any number multiplied by 1 stays the same.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 2.",
+                "role": "user"
+              },
+              {
+                "content": "2 is the only even prime number.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 3.",
+                "role": "user"
+              },
+              {
+                "content": "3 is the smallest odd prime number.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 4.",
+                "role": "user"
+              },
+              {
+                "content": "4 is the smallest composite number.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 5.",
+                "role": "user"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are a helpful assistant. Keep replies to one short sentence.",
+                "role": "system"
+              },
+              {
+                "content": "My name is Bob.",
+                "role": "user"
+              },
+              {
+                "content": "Nice to meet you, Bob.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 1.",
+                "role": "user"
+              },
+              {
+                "content": "1 is the multiplicative identity, meaning any number multiplied by 1 stays the same.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 2.",
+                "role": "user"
+              },
+              {
+                "content": "2 is the only even prime number.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 3.",
+                "role": "user"
+              },
+              {
+                "content": "3 is the smallest odd prime number.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 4.",
+                "role": "user"
+              },
+              {
+                "content": "4 is the smallest composite number.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 5.",
+                "role": "user"
+              },
+              {
+                "content": "5 is a prime number.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 6.",
+                "role": "user"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are a helpful assistant. Keep replies to one short sentence.",
+                "role": "system"
+              },
+              {
+                "content": "My name is Bob.",
+                "role": "user"
+              },
+              {
+                "content": "Nice to meet you, Bob.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 1.",
+                "role": "user"
+              },
+              {
+                "content": "1 is the multiplicative identity, meaning any number multiplied by 1 stays the same.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 2.",
+                "role": "user"
+              },
+              {
+                "content": "2 is the only even prime number.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 3.",
+                "role": "user"
+              },
+              {
+                "content": "3 is the smallest odd prime number.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 4.",
+                "role": "user"
+              },
+              {
+                "content": "4 is the smallest composite number.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 5.",
+                "role": "user"
+              },
+              {
+                "content": "5 is a prime number.",
+                "role": "assistant"
+              },
+              {
+                "content": "Name one fact about the number 6.",
+                "role": "user"
+              },
+              {
+                "content": "6 is the smallest perfect number.",
+                "role": "assistant"
+              },
+              {
+                "content": "What's my name?",
+                "role": "user"
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 8,
+      "embedding_calls": 0,
+      "input_tokens": 1020,
+      "output_tokens": 90,
+      "embedding_tokens": 0
+    }
+  },
+  "complexity": {
+    "loc": 14,
+    "deps": [
+      "langchain",
+      "langgraph"
+    ],
+    "import_seconds": 0.8628585420083255,
+    "modules": 1817
+  }
+}

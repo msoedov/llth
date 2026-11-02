@@ -1,0 +1,740 @@
+{
+  "cases": {
+    "single_fact": {
+      "output": "41 euros",
+      "error": null,
+      "seconds": 4.971471833996475,
+      "checks": {
+        "contains ('41',)": true,
+        "used embeddings": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "Answer questions about the Halvorsen Lab handbook. Always search the handbook first. Answer only from what the search returns. If it does not contain the answer, reply exactly: I don't know.",
+                "role": "system"
+              },
+              {
+                "content": "How much is the daily meal allowance?",
+                "role": "user"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "search_handbook",
+                  "description": "Search the handbook and return the matching passages.",
+                  "parameters": {
+                    "properties": {
+                      "query": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "query"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/embeddings",
+          "body": {
+            "model": "text-embedding-3-small",
+            "input": [
+              [
+                791,
+                20442,
+                85,
+                1105,
+                268,
+                11868,
+                13912,
+                1202,
+                38711,
+                13552,
+                11,
+                90234,
+                10846,
+                2947,
+                343,
+                820,
+                11,
+                304,
+                3130,
+                426,
+                12,
+                8546,
+                13,
+                45276,
+                10846,
+                2947,
+                343,
+                820,
+                7612,
+                264,
+                6307,
+                24914,
+                13,
+                31900,
+                389,
+                279,
+                13552,
+                1566,
+                520,
+                1455,
+                220,
+                1954,
+                4520,
+                13,
+                578,
+                13552,
+                374,
+                99783,
+                61666
+              ],
+              [
+                1954,
+                4520,
+                13,
+                578,
+                13552,
+                374,
+                99783,
+                61666,
+                1475,
+                2132,
+                7950,
+                555,
+                279,
+                14523,
+                54611,
+                13
+              ],
+              [
+                92348,
+                5944,
+                520,
+                20442,
+                85,
+                1105,
+                268,
+                11868,
+                374,
+                12054,
+                555,
+                763,
+                4297,
+                350,
+                588,
+                275,
+                13,
+                578,
+                7446,
+                15496,
+                41458,
+                374,
+                220,
+                3174,
+                33588,
+                13,
+                51982,
+                2011,
+                387,
+                13019,
+                220,
+                972,
+                2919,
+                1603,
+                25959,
+                13
+              ],
+              [
+                6540,
+                3385,
+                315,
+                16106,
+                29569,
+                15962,
+                527,
+                5068,
+                389,
+                9070,
+                220,
+                20800,
+                16,
+                13,
+                578,
+                84750,
+                1486,
+                369,
+                264,
+                4027,
+                17035,
+                374,
+                279,
+                11226,
+                36086,
+                25351,
+                13,
+                6785,
+                57648,
+                1935,
+                2035,
+                389,
+                279,
+                1176,
+                7159,
+                315,
+                1855,
+                8502,
+                13
+              ],
+              [
+                3648,
+                5687,
+                5371,
+                264,
+                6437,
+                24914,
+                389,
+                1938,
+                832,
+                13,
+                362,
+                6307,
+                24914,
+                374,
+                11938,
+                1306,
+                12579,
+                279,
+                36332,
+                220,
+                17,
+                7296,
+                3388,
+                11,
+                902,
+                374,
+                9076,
+                1475,
+                4848,
+                5672,
+                13,
+                7357,
+                502,
+                18467,
+                374,
+                35526,
+                449,
+                264,
+                36528,
+                369,
+                220,
+                4364,
+                2919,
+                13
+              ]
+            ],
+            "encoding_format": "base64"
+          }
+        },
+        {
+          "path": "/v1/embeddings",
+          "body": {
+            "model": "text-embedding-3-small",
+            "input": [
+              [
+                49174,
+                15496,
+                41458
+              ]
+            ],
+            "encoding_format": "base64"
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "Answer questions about the Halvorsen Lab handbook. Always search the handbook first. Answer only from what the search returns. If it does not contain the answer, reply exactly: I don't know.",
+                "role": "system"
+              },
+              {
+                "content": "How much is the daily meal allowance?",
+                "role": "user"
+              },
+              {
+                "content": null,
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "type": "function",
+                    "id": "call_rd5UTuxFWNlsbRDsDZiwMbc1",
+                    "function": {
+                      "name": "search_handbook",
+                      "arguments": "{\"query\": \"daily meal allowance\"}"
+                    }
+                  }
+                ]
+              },
+              {
+                "content": "Conference travel at Halvorsen Lab is approved by Ingrid Tveit. The daily meal allowance is 41 euros. Requests must be filed 18 days before departure.\n\n90 minutes. The rig is recalibrated every second Thursday by the duty technician.\n\nNew staff receive a blue badge on day one. A green badge is granted after passing the Tier 2 safety course, which is offered every six weeks. Every new hire is paired with a mentor for 120 days.\n\nSpills of cryogenic fluid are reported on extension 4471. The muster point for a fire alarm is the east bicycle shed. Fire drills take place on the first Monday of each quarter.",
+                "role": "tool",
+                "tool_call_id": "call_rd5UTuxFWNlsbRDsDZiwMbc1"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "search_handbook",
+                  "description": "Search the handbook and return the matching passages.",
+                  "parameters": {
+                    "properties": {
+                      "query": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "query"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 2,
+      "embedding_calls": 2,
+      "input_tokens": 522,
+      "output_tokens": 25,
+      "embedding_tokens": 187
+    },
+    "exact_detail": {
+      "output": "room B-117",
+      "error": null,
+      "seconds": 2.391116416081786,
+      "checks": {
+        "contains ('B-117',)": true,
+        "used embeddings": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "Answer questions about the Halvorsen Lab handbook. Always search the handbook first. Answer only from what the search returns. If it does not contain the answer, reply exactly: I don't know.",
+                "role": "system"
+              },
+              {
+                "content": "Where is Old Marigold kept?",
+                "role": "user"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "search_handbook",
+                  "description": "Search the handbook and return the matching passages.",
+                  "parameters": {
+                    "properties": {
+                      "query": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "query"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/embeddings",
+          "body": {
+            "model": "text-embedding-3-small",
+            "input": [
+              [
+                18788,
+                2947,
+                343,
+                820,
+                8774,
+                3813
+              ]
+            ],
+            "encoding_format": "base64"
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "Answer questions about the Halvorsen Lab handbook. Always search the handbook first. Answer only from what the search returns. If it does not contain the answer, reply exactly: I don't know.",
+                "role": "system"
+              },
+              {
+                "content": "Where is Old Marigold kept?",
+                "role": "user"
+              },
+              {
+                "content": null,
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "type": "function",
+                    "id": "call_PUDCbK9xxQphMyozCUizpH8a",
+                    "function": {
+                      "name": "search_handbook",
+                      "arguments": "{\"query\": \"Old Marigold kept location\"}"
+                    }
+                  }
+                ]
+              },
+              {
+                "content": "The Halvorsen Lab keeps its calibration rig, nicknamed Old Marigold, in room B-117. Booking Old Marigold requires a green badge. Sessions on the rig last at most 90 minutes. The rig is recalibrated\n\nSpills of cryogenic fluid are reported on extension 4471. The muster point for a fire alarm is the east bicycle shed. Fire drills take place on the first Monday of each quarter.\n\nNew staff receive a blue badge on day one. A green badge is granted after passing the Tier 2 safety course, which is offered every six weeks. Every new hire is paired with a mentor for 120 days.\n\n90 minutes. The rig is recalibrated every second Thursday by the duty technician.",
+                "role": "tool",
+                "tool_call_id": "call_PUDCbK9xxQphMyozCUizpH8a"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "search_handbook",
+                  "description": "Search the handbook and return the matching passages.",
+                  "parameters": {
+                    "properties": {
+                      "query": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "query"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 2,
+      "embedding_calls": 1,
+      "input_tokens": 542,
+      "output_tokens": 30,
+      "embedding_tokens": 6
+    },
+    "multi_document": {
+      "output": "They must pass the Tier 2 safety course to get a green badge, since booking Old Marigold requires a green badge.",
+      "error": null,
+      "seconds": 2.0774176670238376,
+      "checks": {
+        "contains ('Tier 2',)": true,
+        "contains ('green',)": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "Answer questions about the Halvorsen Lab handbook. Always search the handbook first. Answer only from what the search returns. If it does not contain the answer, reply exactly: I don't know.",
+                "role": "system"
+              },
+              {
+                "content": "What must a new hire do before they can book Old Marigold?",
+                "role": "user"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "search_handbook",
+                  "description": "Search the handbook and return the matching passages.",
+                  "parameters": {
+                    "properties": {
+                      "query": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "query"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/embeddings",
+          "body": {
+            "model": "text-embedding-3-small",
+            "input": [
+              [
+                943,
+                18467,
+                2363,
+                10846,
+                2947,
+                343,
+                820,
+                1603,
+                814,
+                649,
+                2363,
+                10846,
+                2947,
+                343,
+                820,
+                4967,
+                389,
+                38669,
+                14765
+              ]
+            ],
+            "encoding_format": "base64"
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "Answer questions about the Halvorsen Lab handbook. Always search the handbook first. Answer only from what the search returns. If it does not contain the answer, reply exactly: I don't know.",
+                "role": "system"
+              },
+              {
+                "content": "What must a new hire do before they can book Old Marigold?",
+                "role": "user"
+              },
+              {
+                "content": null,
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "type": "function",
+                    "id": "call_Do3QDFCrA61YwyZkE8vvk8ER",
+                    "function": {
+                      "name": "search_handbook",
+                      "arguments": "{\"query\": \"new hire book Old Marigold before they can book Old Marigold training onboarding approval\"}"
+                    }
+                  }
+                ]
+              },
+              {
+                "content": "New staff receive a blue badge on day one. A green badge is granted after passing the Tier 2 safety course, which is offered every six weeks. Every new hire is paired with a mentor for 120 days.\n\nThe Halvorsen Lab keeps its calibration rig, nicknamed Old Marigold, in room B-117. Booking Old Marigold requires a green badge. Sessions on the rig last at most 90 minutes. The rig is recalibrated\n\nSpills of cryogenic fluid are reported on extension 4471. The muster point for a fire alarm is the east bicycle shed. Fire drills take place on the first Monday of each quarter.\n\nConference travel at Halvorsen Lab is approved by Ingrid Tveit. The daily meal allowance is 41 euros. Requests must be filed 18 days before departure.",
+                "role": "tool",
+                "tool_call_id": "call_Do3QDFCrA61YwyZkE8vvk8ER"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "search_handbook",
+                  "description": "Search the handbook and return the matching passages.",
+                  "parameters": {
+                    "properties": {
+                      "query": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "query"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 2,
+      "embedding_calls": 1,
+      "input_tokens": 585,
+      "output_tokens": 64,
+      "embedding_tokens": 19
+    },
+    "not_in_documents": {
+      "output": "I don't know",
+      "error": null,
+      "seconds": 1.7810154168400913,
+      "checks": {
+        "contains (\"don't know\",)": true,
+        "excludes ('euro',)": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "Answer questions about the Halvorsen Lab handbook. Always search the handbook first. Answer only from what the search returns. If it does not contain the answer, reply exactly: I don't know.",
+                "role": "system"
+              },
+              {
+                "content": "What is the parking fee at Halvorsen Lab?",
+                "role": "user"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "search_handbook",
+                  "description": "Search the handbook and return the matching passages.",
+                  "parameters": {
+                    "properties": {
+                      "query": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "query"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/embeddings",
+          "body": {
+            "model": "text-embedding-3-small",
+            "input": [
+              [
+                29836,
+                287,
+                11307,
+                13217,
+                20442,
+                85,
+                1105,
+                268,
+                11868,
+                76349
+              ]
+            ],
+            "encoding_format": "base64"
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "Answer questions about the Halvorsen Lab handbook. Always search the handbook first. Answer only from what the search returns. If it does not contain the answer, reply exactly: I don't know.",
+                "role": "system"
+              },
+              {
+                "content": "What is the parking fee at Halvorsen Lab?",
+                "role": "user"
+              },
+              {
+                "content": null,
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "type": "function",
+                    "id": "call_5CJNLrbGgSYoAhEPub2hNmuq",
+                    "function": {
+                      "name": "search_handbook",
+                      "arguments": "{\"query\": \"parking fee parking Halvorsen Lab handbook\"}"
+                    }
+                  }
+                ]
+              },
+              {
+                "content": "The Halvorsen Lab keeps its calibration rig, nicknamed Old Marigold, in room B-117. Booking Old Marigold requires a green badge. Sessions on the rig last at most 90 minutes. The rig is recalibrated\n\nConference travel at Halvorsen Lab is approved by Ingrid Tveit. The daily meal allowance is 41 euros. Requests must be filed 18 days before departure.\n\nSpills of cryogenic fluid are reported on extension 4471. The muster point for a fire alarm is the east bicycle shed. Fire drills take place on the first Monday of each quarter.\n\n90 minutes. The rig is recalibrated every second Thursday by the duty technician.",
+                "role": "tool",
+                "tool_call_id": "call_5CJNLrbGgSYoAhEPub2hNmuq"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "search_handbook",
+                  "description": "Search the handbook and return the matching passages.",
+                  "parameters": {
+                    "properties": {
+                      "query": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "query"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 2,
+      "embedding_calls": 1,
+      "input_tokens": 540,
+      "output_tokens": 31,
+      "embedding_tokens": 10
+    }
+  },
+  "complexity": {
+    "loc": 22,
+    "deps": [
+      "langchain",
+      "langchain_core",
+      "langchain_openai",
+      "langchain_text_splitters"
+    ],
+    "import_seconds": 0.9624062080401927,
+    "modules": 1916
+  }
+}

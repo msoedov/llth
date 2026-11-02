@@ -1,0 +1,78 @@
+{
+  "cases": {
+    "all_correct": {
+      "output": {
+        "scores": [
+          1.0
+        ],
+        "mean": 1.0
+      },
+      "error": null,
+      "seconds": 0.049671666929498315,
+      "checks": {
+        "scores == [1.0]": true,
+        "mean == 1.0": true
+      },
+      "tool_calls": [],
+      "requests": [],
+      "llm_calls": 0,
+      "embedding_calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "embedding_tokens": 0
+    },
+    "mixed": {
+      "output": {
+        "scores": [
+          1.0,
+          0.0
+        ],
+        "mean": 0.5
+      },
+      "error": null,
+      "seconds": 0.0015071248635649681,
+      "checks": {
+        "scores == [1.0, 0.0]": true,
+        "mean == 0.5": true
+      },
+      "tool_calls": [],
+      "requests": [],
+      "llm_calls": 0,
+      "embedding_calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "embedding_tokens": 0
+    },
+    "target_crashes": {
+      "output": {
+        "scores": [
+          1.0,
+          null,
+          0.0
+        ],
+        "mean": 0.5
+      },
+      "error": null,
+      "seconds": 0.0037620000075548887,
+      "checks": {
+        "scores == [1.0, None, 0.0]": true,
+        "mean == 0.5": true
+      },
+      "tool_calls": [],
+      "requests": [],
+      "llm_calls": 0,
+      "embedding_calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "embedding_tokens": 0
+    }
+  },
+  "complexity": {
+    "loc": 18,
+    "deps": [
+      "langsmith"
+    ],
+    "import_seconds": 0.4246642501093447,
+    "modules": 1298
+  }
+}

@@ -1,0 +1,1256 @@
+{
+  "cases": {
+    "both_specialists": {
+      "output": "Done \u2014 I scheduled the meeting with design@acme.dev for next Tuesday from 2:00 PM to 3:00 PM and sent them a reminder email about reviewing the new mockups.",
+      "error": null,
+      "seconds": 4.562504041939974,
+      "checks": {
+        "called create_calendar_event x1": true,
+        "called send_email x1": true
+      },
+      "tool_calls": [
+        {
+          "name": "create_calendar_event",
+          "args": [],
+          "kwargs": {
+            "title": "Meeting to review the new mockups",
+            "start_time": "2026-11-10T14:00:00",
+            "end_time": "2026-11-10T15:00:00",
+            "attendees": [
+              "design@acme.dev"
+            ],
+            "location": ""
+          }
+        },
+        {
+          "name": "send_email",
+          "args": [],
+          "kwargs": {
+            "to": [
+              "design@acme.dev"
+            ],
+            "subject": "Reminder: Review new mockups",
+            "body": "Hi Design Team,\n\nJust a quick reminder to please review the new mockups when you have a chance. We\u2019ve also scheduled a meeting for next Tuesday at 2:00 PM for 1 hour.\n\nThanks!\n"
+          }
+        }
+      ],
+      "requests": [
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are a helpful personal assistant. You can schedule calendar events and send emails. Break down user requests and delegate each part. Delegate only what the user asked for.",
+                "role": "system"
+              },
+              {
+                "content": "Schedule a meeting with design@acme.dev next Tuesday at 2pm for 1 hour, and send them an email reminder about reviewing the new mockups.",
+                "role": "user"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "schedule_event",
+                  "description": "Schedule calendar events using natural language. Include attendee emails and times.",
+                  "parameters": {
+                    "properties": {
+                      "request": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "request"
+                    ],
+                    "type": "object"
+                  }
+                }
+              },
+              {
+                "type": "function",
+                "function": {
+                  "name": "manage_email",
+                  "description": "Send emails using natural language. Include recipients and the message.",
+                  "parameters": {
+                    "properties": {
+                      "request": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "request"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "Today's date is 2026-11-02. You are a calendar scheduling assistant. Parse natural language scheduling requests into ISO datetime formats. Use get_available_time_slots to check availability when needed. Use create_calendar_event to schedule events. Always confirm what was scheduled in your final response.",
+                "role": "system"
+              },
+              {
+                "content": "Schedule a meeting with design@acme.dev next Tuesday at 2:00 PM for 1 hour. Invite design@acme.dev as an attendee. Title: Meeting to review the new mockups.",
+                "role": "user"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "create_calendar_event",
+                  "description": "Create a calendar event. Requires exact ISO datetime format.",
+                  "parameters": {
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      },
+                      "start_time": {
+                        "type": "string"
+                      },
+                      "end_time": {
+                        "type": "string"
+                      },
+                      "attendees": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "location": {
+                        "default": "",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "title",
+                      "start_time",
+                      "end_time",
+                      "attendees"
+                    ],
+                    "type": "object"
+                  }
+                }
+              },
+              {
+                "type": "function",
+                "function": {
+                  "name": "get_available_time_slots",
+                  "description": "Check calendar availability for given attendees on a specific date.",
+                  "parameters": {
+                    "properties": {
+                      "attendees": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "date": {
+                        "type": "string"
+                      },
+                      "duration_minutes": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "attendees",
+                      "date",
+                      "duration_minutes"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are an email assistant. Compose professional emails based on natural language requests. Use send_email to send the message. Always confirm what was sent in your final response.",
+                "role": "system"
+              },
+              {
+                "content": "Send an email to design@acme.dev reminding them to review the new mockups. Mention that we have scheduled a meeting next Tuesday at 2:00 PM for 1 hour. Keep it concise and friendly.",
+                "role": "user"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "send_email",
+                  "description": "Send an email via email API. Requires properly formatted addresses.",
+                  "parameters": {
+                    "properties": {
+                      "to": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "subject": {
+                        "type": "string"
+                      },
+                      "body": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "to",
+                      "subject",
+                      "body"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "Today's date is 2026-11-02. You are a calendar scheduling assistant. Parse natural language scheduling requests into ISO datetime formats. Use get_available_time_slots to check availability when needed. Use create_calendar_event to schedule events. Always confirm what was scheduled in your final response.",
+                "role": "system"
+              },
+              {
+                "content": "Schedule a meeting with design@acme.dev next Tuesday at 2:00 PM for 1 hour. Invite design@acme.dev as an attendee. Title: Meeting to review the new mockups.",
+                "role": "user"
+              },
+              {
+                "content": null,
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "type": "function",
+                    "id": "call_L6Y3HW7szJ9Og3RLcbr6NH00",
+                    "function": {
+                      "name": "create_calendar_event",
+                      "arguments": "{\"title\": \"Meeting to review the new mockups\", \"start_time\": \"2026-11-10T14:00:00\", \"end_time\": \"2026-11-10T15:00:00\", \"attendees\": [\"design@acme.dev\"]}"
+                    }
+                  }
+                ]
+              },
+              {
+                "content": "Event created: Meeting to review the new mockups from 2026-11-10T14:00:00 to 2026-11-10T15:00:00 with 1 attendees",
+                "role": "tool",
+                "tool_call_id": "call_L6Y3HW7szJ9Og3RLcbr6NH00"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "create_calendar_event",
+                  "description": "Create a calendar event. Requires exact ISO datetime format.",
+                  "parameters": {
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      },
+                      "start_time": {
+                        "type": "string"
+                      },
+                      "end_time": {
+                        "type": "string"
+                      },
+                      "attendees": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "location": {
+                        "default": "",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "title",
+                      "start_time",
+                      "end_time",
+                      "attendees"
+                    ],
+                    "type": "object"
+                  }
+                }
+              },
+              {
+                "type": "function",
+                "function": {
+                  "name": "get_available_time_slots",
+                  "description": "Check calendar availability for given attendees on a specific date.",
+                  "parameters": {
+                    "properties": {
+                      "attendees": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "date": {
+                        "type": "string"
+                      },
+                      "duration_minutes": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "attendees",
+                      "date",
+                      "duration_minutes"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are an email assistant. Compose professional emails based on natural language requests. Use send_email to send the message. Always confirm what was sent in your final response.",
+                "role": "system"
+              },
+              {
+                "content": "Send an email to design@acme.dev reminding them to review the new mockups. Mention that we have scheduled a meeting next Tuesday at 2:00 PM for 1 hour. Keep it concise and friendly.",
+                "role": "user"
+              },
+              {
+                "content": null,
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "type": "function",
+                    "id": "call_xKOkfpwUKVbpGSyIluF5nWDV",
+                    "function": {
+                      "name": "send_email",
+                      "arguments": "{\"to\": [\"design@acme.dev\"], \"subject\": \"Reminder: Review new mockups\", \"body\": \"Hi Design Team,\\n\\nJust a quick reminder to please review the new mockups when you have a chance. We\u2019ve also scheduled a meeting for next Tuesday at 2:00 PM for 1 hour.\\n\\nThanks!\\n\"}"
+                    }
+                  }
+                ]
+              },
+              {
+                "content": "Email sent to design@acme.dev - Subject: Reminder: Review new mockups",
+                "role": "tool",
+                "tool_call_id": "call_xKOkfpwUKVbpGSyIluF5nWDV"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "send_email",
+                  "description": "Send an email via email API. Requires properly formatted addresses.",
+                  "parameters": {
+                    "properties": {
+                      "to": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "subject": {
+                        "type": "string"
+                      },
+                      "body": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "to",
+                      "subject",
+                      "body"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are a helpful personal assistant. You can schedule calendar events and send emails. Break down user requests and delegate each part. Delegate only what the user asked for.",
+                "role": "system"
+              },
+              {
+                "content": "Schedule a meeting with design@acme.dev next Tuesday at 2pm for 1 hour, and send them an email reminder about reviewing the new mockups.",
+                "role": "user"
+              },
+              {
+                "content": null,
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "type": "function",
+                    "id": "call_z4b9Bk4zDvWqFjomcNvV7dkX",
+                    "function": {
+                      "name": "schedule_event",
+                      "arguments": "{\"request\": \"Schedule a meeting with design@acme.dev next Tuesday at 2:00 PM for 1 hour. Invite design@acme.dev as an attendee. Title: Meeting to review the new mockups.\"}"
+                    }
+                  },
+                  {
+                    "type": "function",
+                    "id": "call_Kdta5YMYqFIdPzj2mHODEFHc",
+                    "function": {
+                      "name": "manage_email",
+                      "arguments": "{\"request\": \"Send an email to design@acme.dev reminding them to review the new mockups. Mention that we have scheduled a meeting next Tuesday at 2:00 PM for 1 hour. Keep it concise and friendly.\"}"
+                    }
+                  }
+                ]
+              },
+              {
+                "content": "Scheduled: **\u201cMeeting to review the new mockups\u201d** with **design@acme.dev** on **2026-11-10 from 2:00 PM to 3:00 PM**.",
+                "role": "tool",
+                "tool_call_id": "call_z4b9Bk4zDvWqFjomcNvV7dkX"
+              },
+              {
+                "content": "Done \u2014 I sent a concise, friendly email to design@acme.dev reminding them to review the new mockups and noting the meeting next Tuesday at 2:00 PM for 1 hour.",
+                "role": "tool",
+                "tool_call_id": "call_Kdta5YMYqFIdPzj2mHODEFHc"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "schedule_event",
+                  "description": "Schedule calendar events using natural language. Include attendee emails and times.",
+                  "parameters": {
+                    "properties": {
+                      "request": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "request"
+                    ],
+                    "type": "object"
+                  }
+                }
+              },
+              {
+                "type": "function",
+                "function": {
+                  "name": "manage_email",
+                  "description": "Send emails using natural language. Include recipients and the message.",
+                  "parameters": {
+                    "properties": {
+                      "request": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "request"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 6,
+      "embedding_calls": 0,
+      "input_tokens": 1932,
+      "output_tokens": 411,
+      "embedding_tokens": 0
+    },
+    "calendar_only": {
+      "output": "Done \u2014 I scheduled the 30-minute sync with ops@acme.dev for next Friday at 9:00 AM.",
+      "error": null,
+      "seconds": 4.525215582922101,
+      "checks": {
+        "called create_calendar_event x1": true,
+        "did not call send_email": true
+      },
+      "tool_calls": [
+        {
+          "name": "get_available_time_slots",
+          "args": [],
+          "kwargs": {
+            "attendees": [
+              "ops@acme.dev"
+            ],
+            "date": "2026-11-06",
+            "duration_minutes": 30
+          }
+        },
+        {
+          "name": "create_calendar_event",
+          "args": [],
+          "kwargs": {
+            "title": "Sync",
+            "start_time": "2026-11-06T09:00:00",
+            "end_time": "2026-11-06T09:30:00",
+            "attendees": [
+              "ops@acme.dev"
+            ],
+            "location": ""
+          }
+        }
+      ],
+      "requests": [
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are a helpful personal assistant. You can schedule calendar events and send emails. Break down user requests and delegate each part. Delegate only what the user asked for.",
+                "role": "system"
+              },
+              {
+                "content": "Book a 30 minute sync with ops@acme.dev next Friday at 9am.",
+                "role": "user"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "schedule_event",
+                  "description": "Schedule calendar events using natural language. Include attendee emails and times.",
+                  "parameters": {
+                    "properties": {
+                      "request": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "request"
+                    ],
+                    "type": "object"
+                  }
+                }
+              },
+              {
+                "type": "function",
+                "function": {
+                  "name": "manage_email",
+                  "description": "Send emails using natural language. Include recipients and the message.",
+                  "parameters": {
+                    "properties": {
+                      "request": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "request"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "Today's date is 2026-11-02. You are a calendar scheduling assistant. Parse natural language scheduling requests into ISO datetime formats. Use get_available_time_slots to check availability when needed. Use create_calendar_event to schedule events. Always confirm what was scheduled in your final response.",
+                "role": "system"
+              },
+              {
+                "content": "Schedule a 30-minute sync with ops@acme.dev next Friday at 9:00 AM. Use the user's calendar and include the attendee email ops@acme.dev.",
+                "role": "user"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "create_calendar_event",
+                  "description": "Create a calendar event. Requires exact ISO datetime format.",
+                  "parameters": {
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      },
+                      "start_time": {
+                        "type": "string"
+                      },
+                      "end_time": {
+                        "type": "string"
+                      },
+                      "attendees": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "location": {
+                        "default": "",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "title",
+                      "start_time",
+                      "end_time",
+                      "attendees"
+                    ],
+                    "type": "object"
+                  }
+                }
+              },
+              {
+                "type": "function",
+                "function": {
+                  "name": "get_available_time_slots",
+                  "description": "Check calendar availability for given attendees on a specific date.",
+                  "parameters": {
+                    "properties": {
+                      "attendees": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "date": {
+                        "type": "string"
+                      },
+                      "duration_minutes": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "attendees",
+                      "date",
+                      "duration_minutes"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "Today's date is 2026-11-02. You are a calendar scheduling assistant. Parse natural language scheduling requests into ISO datetime formats. Use get_available_time_slots to check availability when needed. Use create_calendar_event to schedule events. Always confirm what was scheduled in your final response.",
+                "role": "system"
+              },
+              {
+                "content": "Schedule a 30-minute sync with ops@acme.dev next Friday at 9:00 AM. Use the user's calendar and include the attendee email ops@acme.dev.",
+                "role": "user"
+              },
+              {
+                "content": null,
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "type": "function",
+                    "id": "call_D05vuQkX4uhXDANKqeO7bmZm",
+                    "function": {
+                      "name": "get_available_time_slots",
+                      "arguments": "{\"attendees\": [\"ops@acme.dev\"], \"date\": \"2026-11-06\", \"duration_minutes\": 30}"
+                    }
+                  }
+                ]
+              },
+              {
+                "content": "[\"09:00\", \"14:00\", \"16:00\"]",
+                "role": "tool",
+                "tool_call_id": "call_D05vuQkX4uhXDANKqeO7bmZm"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "create_calendar_event",
+                  "description": "Create a calendar event. Requires exact ISO datetime format.",
+                  "parameters": {
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      },
+                      "start_time": {
+                        "type": "string"
+                      },
+                      "end_time": {
+                        "type": "string"
+                      },
+                      "attendees": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "location": {
+                        "default": "",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "title",
+                      "start_time",
+                      "end_time",
+                      "attendees"
+                    ],
+                    "type": "object"
+                  }
+                }
+              },
+              {
+                "type": "function",
+                "function": {
+                  "name": "get_available_time_slots",
+                  "description": "Check calendar availability for given attendees on a specific date.",
+                  "parameters": {
+                    "properties": {
+                      "attendees": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "date": {
+                        "type": "string"
+                      },
+                      "duration_minutes": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "attendees",
+                      "date",
+                      "duration_minutes"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "Today's date is 2026-11-02. You are a calendar scheduling assistant. Parse natural language scheduling requests into ISO datetime formats. Use get_available_time_slots to check availability when needed. Use create_calendar_event to schedule events. Always confirm what was scheduled in your final response.",
+                "role": "system"
+              },
+              {
+                "content": "Schedule a 30-minute sync with ops@acme.dev next Friday at 9:00 AM. Use the user's calendar and include the attendee email ops@acme.dev.",
+                "role": "user"
+              },
+              {
+                "content": null,
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "type": "function",
+                    "id": "call_D05vuQkX4uhXDANKqeO7bmZm",
+                    "function": {
+                      "name": "get_available_time_slots",
+                      "arguments": "{\"attendees\": [\"ops@acme.dev\"], \"date\": \"2026-11-06\", \"duration_minutes\": 30}"
+                    }
+                  }
+                ]
+              },
+              {
+                "content": "[\"09:00\", \"14:00\", \"16:00\"]",
+                "role": "tool",
+                "tool_call_id": "call_D05vuQkX4uhXDANKqeO7bmZm"
+              },
+              {
+                "content": null,
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "type": "function",
+                    "id": "call_pkbdylc2uSm8zpIzwqYopTmE",
+                    "function": {
+                      "name": "create_calendar_event",
+                      "arguments": "{\"title\": \"Sync\", \"start_time\": \"2026-11-06T09:00:00\", \"end_time\": \"2026-11-06T09:30:00\", \"attendees\": [\"ops@acme.dev\"], \"location\": \"\"}"
+                    }
+                  }
+                ]
+              },
+              {
+                "content": "Event created: Sync from 2026-11-06T09:00:00 to 2026-11-06T09:30:00 with 1 attendees",
+                "role": "tool",
+                "tool_call_id": "call_pkbdylc2uSm8zpIzwqYopTmE"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "create_calendar_event",
+                  "description": "Create a calendar event. Requires exact ISO datetime format.",
+                  "parameters": {
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      },
+                      "start_time": {
+                        "type": "string"
+                      },
+                      "end_time": {
+                        "type": "string"
+                      },
+                      "attendees": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "location": {
+                        "default": "",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "title",
+                      "start_time",
+                      "end_time",
+                      "attendees"
+                    ],
+                    "type": "object"
+                  }
+                }
+              },
+              {
+                "type": "function",
+                "function": {
+                  "name": "get_available_time_slots",
+                  "description": "Check calendar availability for given attendees on a specific date.",
+                  "parameters": {
+                    "properties": {
+                      "attendees": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "date": {
+                        "type": "string"
+                      },
+                      "duration_minutes": {
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "attendees",
+                      "date",
+                      "duration_minutes"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are a helpful personal assistant. You can schedule calendar events and send emails. Break down user requests and delegate each part. Delegate only what the user asked for.",
+                "role": "system"
+              },
+              {
+                "content": "Book a 30 minute sync with ops@acme.dev next Friday at 9am.",
+                "role": "user"
+              },
+              {
+                "content": null,
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "type": "function",
+                    "id": "call_fAZsuQKX3ci8ui5XEJeglz5M",
+                    "function": {
+                      "name": "schedule_event",
+                      "arguments": "{\"request\": \"Schedule a 30-minute sync with ops@acme.dev next Friday at 9:00 AM. Use the user's calendar and include the attendee email ops@acme.dev.\"}"
+                    }
+                  }
+                ]
+              },
+              {
+                "content": "Scheduled: **Sync** on **2026-11-06** from **9:00 AM to 9:30 AM** with **ops@acme.dev**.",
+                "role": "tool",
+                "tool_call_id": "call_fAZsuQKX3ci8ui5XEJeglz5M"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "schedule_event",
+                  "description": "Schedule calendar events using natural language. Include attendee emails and times.",
+                  "parameters": {
+                    "properties": {
+                      "request": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "request"
+                    ],
+                    "type": "object"
+                  }
+                }
+              },
+              {
+                "type": "function",
+                "function": {
+                  "name": "manage_email",
+                  "description": "Send emails using natural language. Include recipients and the message.",
+                  "parameters": {
+                    "properties": {
+                      "request": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "request"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 5,
+      "embedding_calls": 0,
+      "input_tokens": 1627,
+      "output_tokens": 222,
+      "embedding_tokens": 0
+    },
+    "email_only": {
+      "output": "Done \u2014 I emailed finance@acme.dev that the Q3 report is ready.",
+      "error": null,
+      "seconds": 3.3754965839907527,
+      "checks": {
+        "called send_email x1": true,
+        "did not call create_calendar_event": true
+      },
+      "tool_calls": [
+        {
+          "name": "send_email",
+          "args": [],
+          "kwargs": {
+            "to": [
+              "finance@acme.dev"
+            ],
+            "subject": "Q3 Report Ready",
+            "body": "The Q3 report is ready."
+          }
+        }
+      ],
+      "requests": [
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are a helpful personal assistant. You can schedule calendar events and send emails. Break down user requests and delegate each part. Delegate only what the user asked for.",
+                "role": "system"
+              },
+              {
+                "content": "Email finance@acme.dev that the Q3 report is ready.",
+                "role": "user"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "schedule_event",
+                  "description": "Schedule calendar events using natural language. Include attendee emails and times.",
+                  "parameters": {
+                    "properties": {
+                      "request": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "request"
+                    ],
+                    "type": "object"
+                  }
+                }
+              },
+              {
+                "type": "function",
+                "function": {
+                  "name": "manage_email",
+                  "description": "Send emails using natural language. Include recipients and the message.",
+                  "parameters": {
+                    "properties": {
+                      "request": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "request"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are an email assistant. Compose professional emails based on natural language requests. Use send_email to send the message. Always confirm what was sent in your final response.",
+                "role": "system"
+              },
+              {
+                "content": "Send an email to finance@acme.dev saying: 'The Q3 report is ready.'",
+                "role": "user"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "send_email",
+                  "description": "Send an email via email API. Requires properly formatted addresses.",
+                  "parameters": {
+                    "properties": {
+                      "to": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "subject": {
+                        "type": "string"
+                      },
+                      "body": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "to",
+                      "subject",
+                      "body"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are an email assistant. Compose professional emails based on natural language requests. Use send_email to send the message. Always confirm what was sent in your final response.",
+                "role": "system"
+              },
+              {
+                "content": "Send an email to finance@acme.dev saying: 'The Q3 report is ready.'",
+                "role": "user"
+              },
+              {
+                "content": null,
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "type": "function",
+                    "id": "call_npXgqNc0aRwUmE59GCyrELxi",
+                    "function": {
+                      "name": "send_email",
+                      "arguments": "{\"to\": [\"finance@acme.dev\"], \"subject\": \"Q3 Report Ready\", \"body\": \"The Q3 report is ready.\"}"
+                    }
+                  }
+                ]
+              },
+              {
+                "content": "Email sent to finance@acme.dev - Subject: Q3 Report Ready",
+                "role": "tool",
+                "tool_call_id": "call_npXgqNc0aRwUmE59GCyrELxi"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "send_email",
+                  "description": "Send an email via email API. Requires properly formatted addresses.",
+                  "parameters": {
+                    "properties": {
+                      "to": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "subject": {
+                        "type": "string"
+                      },
+                      "body": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "to",
+                      "subject",
+                      "body"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "stream": false,
+            "messages": [
+              {
+                "content": "You are a helpful personal assistant. You can schedule calendar events and send emails. Break down user requests and delegate each part. Delegate only what the user asked for.",
+                "role": "system"
+              },
+              {
+                "content": "Email finance@acme.dev that the Q3 report is ready.",
+                "role": "user"
+              },
+              {
+                "content": null,
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "type": "function",
+                    "id": "call_av0CjgdopklIHHagMvrwVPZF",
+                    "function": {
+                      "name": "manage_email",
+                      "arguments": "{\"request\": \"Send an email to finance@acme.dev saying: 'The Q3 report is ready.'\"}"
+                    }
+                  }
+                ]
+              },
+              {
+                "content": "Sent to finance@acme.dev with subject \u201cQ3 Report Ready\u201d and message: \u201cThe Q3 report is ready.\u201d",
+                "role": "tool",
+                "tool_call_id": "call_av0CjgdopklIHHagMvrwVPZF"
+              }
+            ],
+            "tools": [
+              {
+                "type": "function",
+                "function": {
+                  "name": "schedule_event",
+                  "description": "Schedule calendar events using natural language. Include attendee emails and times.",
+                  "parameters": {
+                    "properties": {
+                      "request": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "request"
+                    ],
+                    "type": "object"
+                  }
+                }
+              },
+              {
+                "type": "function",
+                "function": {
+                  "name": "manage_email",
+                  "description": "Send emails using natural language. Include recipients and the message.",
+                  "parameters": {
+                    "properties": {
+                      "request": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "request"
+                    ],
+                    "type": "object"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 4,
+      "embedding_calls": 0,
+      "input_tokens": 937,
+      "output_tokens": 123,
+      "embedding_tokens": 0
+    }
+  },
+  "complexity": {
+    "loc": 23,
+    "deps": [
+      "langchain"
+    ],
+    "import_seconds": 0.9982791661750525,
+    "modules": 1816
+  }
+}

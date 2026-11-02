@@ -1,0 +1,100 @@
+{
+  "cases": {
+    "success": {
+      "output": {
+        "name": "answer",
+        "kind": "chain",
+        "error": false,
+        "tokens": 0,
+        "children": [
+          {
+            "name": "retrieve",
+            "kind": "tool",
+            "error": false,
+            "tokens": 0,
+            "children": []
+          },
+          {
+            "name": "generate",
+            "kind": "chain",
+            "error": false,
+            "tokens": 0,
+            "children": [
+              {
+                "name": "ChatOpenAI",
+                "kind": "llm",
+                "error": false,
+                "tokens": 43,
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      "error": null,
+      "seconds": 0.8244534169789404,
+      "checks": {
+        "span tree shape": true,
+        "llm tokens recorded": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/v1/chat/completions",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "messages": [
+              {
+                "role": "user",
+                "content": "Context: The Halvorsen Lab muster point is the east bicycle shed.\n\nQuestion: Where is the muster point?"
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 1,
+      "embedding_calls": 0,
+      "input_tokens": 29,
+      "output_tokens": 14,
+      "embedding_tokens": 0
+    },
+    "failing_step": {
+      "output": {
+        "name": "answer",
+        "kind": "chain",
+        "error": true,
+        "tokens": 0,
+        "children": [
+          {
+            "name": "retrieve",
+            "kind": "tool",
+            "error": true,
+            "tokens": 0,
+            "children": []
+          }
+        ]
+      },
+      "error": null,
+      "seconds": 0.0026779582258313894,
+      "checks": {
+        "span tree shape": true
+      },
+      "tool_calls": [],
+      "requests": [],
+      "llm_calls": 0,
+      "embedding_calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "embedding_tokens": 0
+    }
+  },
+  "complexity": {
+    "loc": 34,
+    "deps": [
+      "langsmith",
+      "openai"
+    ],
+    "import_seconds": 0.763393749948591,
+    "modules": 2122
+  }
+}

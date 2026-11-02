@@ -1,0 +1,741 @@
+{
+  "cases": {
+    "one_step": {
+      "output": "7",
+      "error": null,
+      "seconds": 3.909567082999274,
+      "checks": {
+        "called add x1": true,
+        "contains ('7',)": true,
+        "llm calls <= 2": true
+      },
+      "tool_calls": [
+        {
+          "name": "add",
+          "args": [],
+          "kwargs": {
+            "a": 3.0,
+            "b": 4.0
+          }
+        }
+      ],
+      "requests": [
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "You are a helpful assistant tasked with performing arithmetic. Use the tools for every operation."
+              },
+              {
+                "role": "user",
+                "content": "Add 3 and 4."
+              }
+            ],
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "add",
+                "description": "Add a and b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              },
+              {
+                "name": "divide",
+                "description": "Divide a by b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              },
+              {
+                "name": "multiply",
+                "description": "Multiply a and b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "type": "function_call_output",
+                "call_id": "call_CQbWEuarsldzZSPXiZA0dIE1",
+                "output": "7.0"
+              }
+            ],
+            "previous_response_id": "resp_0beaffdfc2e401ba006ae883fe50f487d2b5c06965afe34054",
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "add",
+                "description": "Add a and b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              },
+              {
+                "name": "divide",
+                "description": "Divide a by b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              },
+              {
+                "name": "multiply",
+                "description": "Multiply a and b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 2,
+      "embedding_calls": 0,
+      "input_tokens": 266,
+      "output_tokens": 26,
+      "embedding_tokens": 0
+    },
+    "chained_steps": {
+      "output": "5",
+      "error": null,
+      "seconds": 6.037149500101805,
+      "checks": {
+        "called add x1": true,
+        "called multiply x1": true,
+        "called divide x1": true,
+        "contains ('5',)": true,
+        "llm calls <= 4": true
+      },
+      "tool_calls": [
+        {
+          "name": "add",
+          "args": [],
+          "kwargs": {
+            "a": 3.0,
+            "b": 4.0
+          }
+        },
+        {
+          "name": "multiply",
+          "args": [],
+          "kwargs": {
+            "a": 7.0,
+            "b": 5.0
+          }
+        },
+        {
+          "name": "divide",
+          "args": [],
+          "kwargs": {
+            "a": 35.0,
+            "b": 7.0
+          }
+        }
+      ],
+      "requests": [
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "You are a helpful assistant tasked with performing arithmetic. Use the tools for every operation."
+              },
+              {
+                "role": "user",
+                "content": "Add 3 and 4, multiply the result by 5, then divide that by 7."
+              }
+            ],
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "add",
+                "description": "Add a and b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              },
+              {
+                "name": "divide",
+                "description": "Divide a by b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              },
+              {
+                "name": "multiply",
+                "description": "Multiply a and b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "type": "function_call_output",
+                "call_id": "call_grbQZIaeHnEXeyhCgyuMS0GU",
+                "output": "7.0"
+              }
+            ],
+            "previous_response_id": "resp_0832399c1e259f3a006ae88401f9b887d296b358968a063d29",
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "add",
+                "description": "Add a and b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              },
+              {
+                "name": "divide",
+                "description": "Divide a by b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              },
+              {
+                "name": "multiply",
+                "description": "Multiply a and b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "type": "function_call_output",
+                "call_id": "call_CIgDAgX23V0tr4cFgEwKEfhQ",
+                "output": "35.0"
+              }
+            ],
+            "previous_response_id": "resp_0832399c1e259f3a006ae88403667087d28980af93bcbd74d4",
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "add",
+                "description": "Add a and b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              },
+              {
+                "name": "divide",
+                "description": "Divide a by b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              },
+              {
+                "name": "multiply",
+                "description": "Multiply a and b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "type": "function_call_output",
+                "call_id": "call_1vXedhjP4RChKbDpw74WtrWm",
+                "output": "5.0"
+              }
+            ],
+            "previous_response_id": "resp_0832399c1e259f3a006ae88404cbd887d29d9d9edd762e6b05",
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "add",
+                "description": "Add a and b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              },
+              {
+                "name": "divide",
+                "description": "Divide a by b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              },
+              {
+                "name": "multiply",
+                "description": "Multiply a and b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 4,
+      "embedding_calls": 0,
+      "input_tokens": 724,
+      "output_tokens": 68,
+      "embedding_tokens": 0
+    },
+    "tool_reports_error": {
+      "output": "Division by zero is undefined, so 10 \u00f7 0 cannot be computed.",
+      "error": null,
+      "seconds": 3.1154968340415508,
+      "checks": {
+        "called divide x1": true,
+        "contains ('zero',)": true,
+        "llm calls <= 2": true
+      },
+      "tool_calls": [
+        {
+          "name": "divide",
+          "args": [],
+          "kwargs": {
+            "a": 10.0,
+            "b": 0.0
+          }
+        }
+      ],
+      "requests": [
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "role": "developer",
+                "content": "You are a helpful assistant tasked with performing arithmetic. Use the tools for every operation."
+              },
+              {
+                "role": "user",
+                "content": "Divide 10 by 0."
+              }
+            ],
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "add",
+                "description": "Add a and b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              },
+              {
+                "name": "divide",
+                "description": "Divide a by b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              },
+              {
+                "name": "multiply",
+                "description": "Multiply a and b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/responses",
+          "body": {
+            "model": "gpt-5.4-mini",
+            "input": [
+              {
+                "type": "function_call_output",
+                "call_id": "call_6OHHhuU1q420xPs0MvkknRuq",
+                "output": "error: division by zero"
+              }
+            ],
+            "previous_response_id": "resp_03cd1e273485ea15006ae88408035487d29866528567175ccc",
+            "reasoning": {},
+            "store": true,
+            "tools": [
+              {
+                "name": "add",
+                "description": "Add a and b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              },
+              {
+                "name": "divide",
+                "description": "Divide a by b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              },
+              {
+                "name": "multiply",
+                "description": "Multiply a and b.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "function"
+              }
+            ]
+          }
+        }
+      ],
+      "llm_calls": 2,
+      "embedding_calls": 0,
+      "input_tokens": 268,
+      "output_tokens": 42,
+      "embedding_tokens": 0
+    }
+  },
+  "complexity": {
+    "loc": 6,
+    "deps": [
+      "agno"
+    ],
+    "import_seconds": 0.5755053751636297,
+    "modules": 1181
+  }
+}
