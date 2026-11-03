@@ -8,7 +8,7 @@ import sys
 import time
 import tokenize
 from collections.abc import Callable
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, is_dataclass
 from pathlib import Path
 from types import ModuleType
 from typing import Any
@@ -113,6 +113,8 @@ def run_case(run: Callable[[Any], Any], case: Case) -> dict:
     with capture() as trace:
         try:
             output = run(case.input)
+            if is_dataclass(output):
+                output = asdict(output)
         except NotImplementedError:
             raise
         except Exception as exc:

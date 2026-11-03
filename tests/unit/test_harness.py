@@ -1,8 +1,10 @@
+from dataclasses import dataclass
+
 import pytest
 from inline_snapshot import snapshot
 
 from evals.capture import recorded
-from evals.checks import called, contains
+from evals.checks import called, contains, field_is
 from evals.harness import (
     Case,
     agreement,
@@ -48,6 +50,18 @@ def test_run_case_records_passes_and_failures():
     result = run_case(lambda _: "hello", Case("c", "in", [contains("hello"), contains("bye")]))
     assert result["output"] == "hello"
     assert result["checks"] == snapshot({"contains ('hello',)": True, "contains ('bye',)": False})
+
+
+@dataclass
+class Point:
+    x: int
+    y: int | None
+
+
+def test_run_case_stores_dataclass_output_as_dict():
+    result = run_case(lambda _: Point(1, None), Case("c", "in", [field_is("x", 1), field_is("y", None)]))
+    assert result["output"] == snapshot({"x": 1, "y": None})
+    assert result["checks"] == snapshot({"x == 1": True, "y == None": True})
 
 
 def test_run_case_turns_exception_into_failed_checks():

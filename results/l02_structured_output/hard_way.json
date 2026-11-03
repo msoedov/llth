@@ -1,0 +1,227 @@
+{
+  "cases": {
+    "complete": {
+      "output": {
+        "name": "John Doe",
+        "email": "john@example.com",
+        "phone": "(555) 123-4567"
+      },
+      "error": null,
+      "seconds": 1.6551861250773072,
+      "checks": {
+        "name == 'John Doe'": true,
+        "email == 'john@example.com'": true,
+        "phone == '(555) 123-4567'": true,
+        "llm calls <= 1": true,
+        "no tool calls": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/api/v1/chat/completions",
+          "body": {
+            "model": "openai/gpt-5.4-mini",
+            "messages": [
+              {
+                "role": "system",
+                "content": "Extract contact info from the text. Use null for anything the text does not state."
+              },
+              {
+                "role": "user",
+                "content": "John Doe, john@example.com, (555) 123-4567"
+              }
+            ],
+            "response_format": {
+              "type": "json_schema",
+              "json_schema": {
+                "name": "ContactInfo",
+                "strict": true,
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "phone": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "email",
+                    "phone"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      ],
+      "llm_calls": 1,
+      "embedding_calls": 0,
+      "input_tokens": 83,
+      "output_tokens": 31,
+      "embedding_tokens": 0
+    },
+    "buried_in_prose": {
+      "output": {
+        "name": "Priya Nair",
+        "email": "priya.nair@acme.dev",
+        "phone": null
+      },
+      "error": null,
+      "seconds": 1.2742295830976218,
+      "checks": {
+        "name == 'Priya Nair'": true,
+        "email == 'priya.nair@acme.dev'": true,
+        "phone == None": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/api/v1/chat/completions",
+          "body": {
+            "model": "openai/gpt-5.4-mini",
+            "messages": [
+              {
+                "role": "system",
+                "content": "Extract contact info from the text. Use null for anything the text does not state."
+              },
+              {
+                "role": "user",
+                "content": "Thanks for calling! If the invoice is late, ask for Priya Nair (priya.nair@acme.dev), she handles billing."
+              }
+            ],
+            "response_format": {
+              "type": "json_schema",
+              "json_schema": {
+                "name": "ContactInfo",
+                "strict": true,
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "phone": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "email",
+                    "phone"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      ],
+      "llm_calls": 1,
+      "embedding_calls": 0,
+      "input_tokens": 98,
+      "output_tokens": 31,
+      "embedding_tokens": 0
+    },
+    "missing_fields": {
+      "output": {
+        "name": "Ana Lee",
+        "email": null,
+        "phone": null
+      },
+      "error": null,
+      "seconds": 1.2333061250392348,
+      "checks": {
+        "name == 'Ana Lee'": true,
+        "email == None": true,
+        "phone == None": true
+      },
+      "tool_calls": [],
+      "requests": [
+        {
+          "path": "/api/v1/chat/completions",
+          "body": {
+            "model": "openai/gpt-5.4-mini",
+            "messages": [
+              {
+                "role": "system",
+                "content": "Extract contact info from the text. Use null for anything the text does not state."
+              },
+              {
+                "role": "user",
+                "content": "My name is Ana Lee."
+              }
+            ],
+            "response_format": {
+              "type": "json_schema",
+              "json_schema": {
+                "name": "ContactInfo",
+                "strict": true,
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "phone": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "email",
+                    "phone"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      ],
+      "llm_calls": 1,
+      "embedding_calls": 0,
+      "input_tokens": 74,
+      "output_tokens": 22,
+      "embedding_tokens": 0
+    }
+  },
+  "complexity": {
+    "loc": 50,
+    "deps": [
+      "httpx"
+    ],
+    "import_seconds": 0.04715033294633031,
+    "modules": 199
+  }
+}
